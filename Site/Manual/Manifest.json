@@ -1,0 +1,51 @@
+[
+  {
+    "id": "definitions",
+    "file": "definitions.html",
+    "title_en": "Definitions",
+    "title_uk": "Визначення"
+  },
+  {
+    "id": "pc-setup",
+    "file": "pc-setup.html",
+    "title_en": "First Time PC Setup",
+    "title_uk": "Перше налаштування ПК"
+  },
+  {
+    "id": "quest-setup",
+    "file": "meta-quest-setup.html",
+    "title_en": "First Time Meta Quest 2 Setup",
+    "title_uk": "Перше налаштування Meta Quest 2"
+  },
+  {
+    "id": "session-workflow",
+    "file": "session-workflow.html",
+    "title_en": "Session Workflow",
+    "title_uk": "Робочий процес сесії"
+  },
+  {
+    "id": "emdr-scripts",
+    "file": "emdr-clinical-scripts.html",
+    "title_en": "EMDR Clinical Scripts",
+    "title_uk": "Клінічні скрипти EMDR"
+  },
+  {
+    "id": "vret-protocol",
+    "file": "vret-protocol.html",
+    "title_en": "VRET Protocol",
+    "title_uk": "Протокол VRET"
+  },
+  {
+    "id": "scenarios",
+    "file": "scenarios.html",
+    "title_en": "Scenarios",
+    "title_uk": "Сценарії"
+  },
+  {
+    "id": "troubleshooting",
+    "file": "troubleshooting.html",
+    "title_en": "Troubleshooting",
+    "title_uk": "Вирішення проблем"
+  }
+]
+

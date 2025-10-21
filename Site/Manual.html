@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>User Manual - BRAVEMIND Ukraine</title>
+  <meta name="description" content="User Manual for the BRAVEMIND Ukraine VR system." />
+  <style>
+    :root{
+      --bg:#ffffff; --fg:#0f172a; --muted:#475569; --card:#f8fafc; --border:#e2e8f0; --accent:#1e40af; --accent-contrast:#ffffff;
+      --pad: clamp(1rem, 3vw, 2rem);
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#0b1020; --fg:#e5e7eb; --muted:#94a3b8; --card:#0f172a; --border:#1f2937; --accent:#3b82f6; --accent-contrast:#0b1020 }
+    }
+    body.dark{ --bg:#0b1020; --fg:#e5e7eb; --muted:#94a3b8; --card:#0f172a; --border:#1f2937; --accent:#3b82f6; --accent-contrast:#0b1020 }
+
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,"Helvetica Neue",Arial; background:var(--bg); color:var(--fg); line-height:1.6}
+    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+
+    .wrap{max-width:1100px;margin:0 auto;padding:var(--pad)}
+
+    header{border-bottom:1px solid var(--border); background:linear-gradient(180deg,rgba(30,64,175,.08),transparent)}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .brand{display:flex;align-items:center;gap:.75rem}
+    .brand img{width:44px;height:44px;object-fit:contain}
+    nav { display: flex; align-items: center; gap: 1rem; }
+    nav a { font-weight: 600; color: var(--muted); }
+    nav a.active { color: var(--accent); }
+    .controls{display:flex;align-items:center; gap:.5rem}
+    .btn{border:1px solid var(--border); background:var(--card); color:var(--fg); padding:.55rem .8rem; border-radius:.625rem; cursor:pointer; font-weight:600}
+
+    #mobile-menu-btn { display: none; padding: .5rem; }
+    @media (max-width: 800px) { 
+        nav { display: none; }
+        #mobile-menu-btn { display: inline-flex; align-items: center; justify-content: center; }
+    }
+    
+    .mobile-nav { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg); z-index: 100; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-size: 1.5rem; font-weight: 600; color: var(--fg); }
+    #close-menu-btn { position: absolute; top: var(--pad); right: var(--pad); font-size: 1.5rem; line-height: 1; padding: .25rem .75rem; }
+
+    .partner-bar-container { border-bottom: 1px solid var(--border); }
+    .partner-bar { display: flex; align-items: center; justify-content: center; gap: 1.5rem; padding-top: .75rem; padding-bottom: .75rem; }
+    .partner-label { font-size: .9rem; color: var(--muted); font-weight: 500; }
+    .header-partner-logos { display: flex; align-items: center; gap: 2rem; filter: grayscale(100%) opacity(0.7); }
+    .header-partner-logos img { height: 28px; max-width: 100px; object-fit: contain; }
+    @media (max-width: 800px) {
+        .partner-bar { flex-direction: column; gap: .75rem; }
+        .partner-label { display: none; }
+        .header-partner-logos { gap: 1.5rem; justify-content: center; width: 100%; flex-wrap: wrap; }
+    }
+
+    .manual-layout {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 2.5rem;
+        align-items: start;
+    }
+
+    #manual-sidebar {
+        position: sticky;
+        top: var(--pad);
+        height: calc(100vh - 2 * var(--pad));
+        overflow-y: auto;
+    }
+    
+    #manual-sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #manual-sidebar > ul > li > a {
+        font-weight: 600;
+        color: var(--fg);
+        display: block;
+        padding: .5rem 0;
+        cursor: pointer;
+    }
+    #manual-sidebar > ul > li > a.active {
+        color: var(--accent);
+    }
+
+    #manual-sidebar .submenu {
+        padding-left: 1rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+    }
+    
+    #manual-sidebar li.open > .submenu {
+      max-height: 500px; 
+    }
+
+    #manual-sidebar .sidebar-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: .75rem;
+    }
+    #manual-sidebar .sidebar-title a {
+        color: var(--fg);
+        text-decoration: none;
+    }
+
+    #manual-sidebar .submenu a {
+        display: block;
+        padding: .3rem 0;
+        font-size: 0.9rem;
+        color: var(--muted);
+    }
+    #manual-sidebar .submenu a.active-sub {
+        color: var(--accent);
+        font-weight: 500;
+    }
+    
+    .print-all-btn {
+        margin-top: 1.5rem;
+        width: 100%;
+    }
+    
+    @media (max-width: 900px) {
+        .manual-layout { grid-template-columns: 1fr; }
+        #manual-sidebar { display: none; }
+    }
+
+    main{display:block}
+    h1,h2,h3,h4{line-height:1.25;margin:0 0 .6rem}
+    h1{font-size:clamp(1.75rem,2.5vw,2.25rem)}
+    h2{font-size:clamp(1.4rem,2vw,1.75rem); scroll-margin-top: 2rem; margin-top: 2rem; border-bottom: 1px solid var(--border); padding-bottom: .5rem;}
+    h3{font-size:1.125rem; margin-top: 1.5rem;}
+    
+    footer{border-top:1px solid var(--border); padding: 2.5rem 0; color:var(--muted); margin-top: 2rem;}
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; max-width: 1100px; margin: 0 auto; padding: 0 var(--pad); }
+    .footer-contact { text-align: right; }
+    .footer-contact h3 { margin-top: 0; font-size: 1.1em; color: var(--fg); }
+    .footer-contact p { margin: 0.4rem 0; }
+    .footer-links a { display: block; margin-top: 0.5rem; color: var(--muted); }
+    .footer-links a:hover { color: var(--accent); }
+    footer p { margin: 0.25rem 0; }
+    @media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr; text-align: center; } .footer-contact { text-align: center; margin-top: 1.5rem; } }
+    
+    /* Print Styles */
+    @media print {
+      body { background: #fff; color: #000; counter-reset: page; }
+      header, footer, #manual-sidebar { display: none; }
+      main { padding: 0; }
+      .wrap { max-width: 100%; padding: 0; }
+      .manual-layout { display: block !important; }
+      h1, h2, h3 { color: #000; }
+      p, li { color: #333; }
+      a { color: #000; text-decoration: none; }
+      
+      body > *:not(#print-container) { display: none; }
+      #print-container { display: block; }
+      #print-container section { page-break-after: always; }
+      #print-container h1, #print-container h2 { border-bottom: 1px solid #ccc; }
+      #print-toc { list-style: none; padding: 0; }
+      #print-toc a { text-decoration: none; }
+      #print-toc li { margin-bottom: 0.5rem; }
+
+      @page {
+        @bottom-center {
+          content: "Page " counter(page);
+        }
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap topbar" role="navigation" aria-label="Top bar">
+      <a href="index.html" class="brand" aria-label="Homepage">
+        <img src="assets/BRAVEMIND-Logo.png" alt="BRAVEMIND Ukraine logo" />
+        <div>
+          <strong>BRAVEMIND Ukraine</strong>
+          <div style="font-size:.925rem;color:var(--muted)">USC Institute for Creative Technologies & Partners</div>
+        </div>
+      </a>
+      <nav>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="how-it-works.html">How It Works</a>
+          <a href="adaptations.html">Adaptations</a>
+          <a href="news.html">News</a>
+      </nav>
+      <div class="controls">
+        <button class="btn" type="button" id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <button class="btn" type="button" id="lang-toggle" aria-pressed="false" aria-label="Toggle language">EN / УКР</button>
+        <button class="btn" type="button" id="contrast-toggle" aria-pressed="false" aria-label="Toggle dark mode">Dark</button>
+      </div>
+    </div>
+    <div class="partner-bar-container">
+        <div class="wrap partner-bar">
+          <span class="partner-label" data-en="In partnership with:" data-uk="У партнерстві з:">In partnership with:</span>
+          <div class="header-partner-logos">
+            <img src="assets/USC.png" alt="USC Logo" />
+            <img src="assets/InternationalInstituteforPostgraduateEducation.png" alt="International Institute of Postgraduate Education Logo" />
+            <img src="assets/63f2deb8461fa01ba4dc31b5_Frame 2.svg" alt="Virry Health Logo" />
+            <img src="assets/Regent.png" alt="Regent Logo" />
+          </div>
+        </div>
+      </div>
+  </header>
+  
+  <div id="mobile-menu" class="mobile-nav">
+      <button class="btn" id="close-menu-btn" aria-label="Close menu">&times;</button>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="adaptations.html">Adaptations</a>
+      <a href="news.html">News</a>
+  </div>
+
+  <main class="wrap manual-layout">
+    <aside id="manual-sidebar">
+      <div class="sidebar-title">
+        <a href="manual.html" data-en="User Manual" data-uk="Посібник користувача">User Manual</a>
+      </div>
+      <nav id="manual-nav">
+        <!-- Sidebar navigation will be built here by JavaScript -->
+      </nav>
+      <button id="print-all-btn" class="btn print-all-btn" data-en="Print All" data-uk="Роздрукувати все">Print All</button>
+    </aside>
+    <article id="manual-content">
+        <!-- Content will be loaded here by JavaScript -->
+    </article>
+  </main>
+
+  <footer class="wrap">
+    <div class="footer-grid">
+        <div>
+            <p>&copy; 2025 BRAVEMIND Ukraine Project</p>
+            <p>USC Institute for Creative Technologies & Partners</p>
+        </div>
+        <div class="footer-contact">
+            <h3 data-en="Contact & Links" data-uk="Контакти та посилання">Contact & Links</h3>
+            <div class="footer-links">
+                <a href="https://www.youtube.com/@SkipRizzoClinicalVR" target="_blank" rel="noopener" data-en="Dr. Skip Rizzo's Clinical VR Channel" data-uk="Канал клінічної ВР доктора Скіпа Ріццо">Dr. Skip Rizzo's Clinical VR Channel</a>
+                <a href="https://www.virryhealth.com/" target="_blank" rel="noopener">Virry Health</a>
+                <a href="https://americanprogram.net/" target="_blank" rel="noopener" data-en="Int'l Institute for Postgraduate Ed." data-uk="Міжнародний інститут післядипломної освіти">Int'l Institute for Postgraduate Ed.</a>
+            </div>
+        </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- Standard Site Controls ---
+      const contrastBtn = document.getElementById('contrast-toggle');
+      const langBtn = document.getElementById('lang-toggle');
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const closeMenuBtn = document.getElementById('close-menu-btn');
+      const isDark = () => document.body.classList.contains('dark');
+      let currentLang = localStorage.getItem('lang') || 'en';
+      
+      const setTheme = mode => {
+        document.body.classList.toggle('dark', mode === 'dark');
+        localStorage.setItem('theme', mode);
+        contrastBtn.textContent = mode === 'dark' ? 'Light' : 'Dark';
+      };
+
+      const setLang = (lang, rootElement = document) => {
+        document.documentElement.lang = lang;
+        rootElement.querySelectorAll('[data-en]').forEach(el => {
+          const text = lang === 'uk' ? el.dataset.uk : el.dataset.en;
+          if (text) el.innerHTML = text;
+        });
+        langBtn.textContent = lang === 'uk' ? 'UKR / EN' : 'EN / УКР';
+        localStorage.setItem('lang', lang);
+      };
+
+      const storedTheme = localStorage.getItem('theme') || (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      setTheme(storedTheme);
+
+      contrastBtn.addEventListener('click', () => setTheme(isDark() ? 'light' : 'dark'));
+      langBtn.addEventListener('click', () => {
+        currentLang = currentLang === 'en' ? 'uk' : 'en';
+        setLang(currentLang, document);
+        translateSidebar();
+        const currentSectionId = window.location.hash.substring(1).split('#')[0] || (manifest.length > 0 ? manifest[0].id : null);
+        if (currentSectionId) renderContent(currentSectionId);
+      });
+      
+      if (mobileMenuBtn && mobileMenu && closeMenuBtn) {
+          mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
+          closeMenuBtn.addEventListener('click', () => mobileMenu.classList.remove('open'));
+      }
+      
+      // --- Dynamic Manual Logic ---
+      let manifest = [];
+      const manualNav = document.getElementById('manual-nav');
+      const manualContent = document.getElementById('manual-content');
+      const printAllBtn = document.getElementById('print-all-btn');
+
+      const translateSidebar = () => {
+        manualNav.querySelectorAll(':scope > ul > li > a').forEach(a => {
+            const li = a.parentElement;
+            const sectionId = li.dataset.sectionId;
+            const section = manifest.find(s => s.id === sectionId);
+            if(section) {
+                a.textContent = currentLang === 'uk' ? section.title_uk : section.title_en;
+            }
+        });
+        manualNav.querySelectorAll('.submenu a').forEach(a => {
+            a.textContent = currentLang === 'uk' ? a.dataset.uk : a.dataset.en;
+        });
+      };
+
+      const renderContent = async (sectionId) => {
+        const section = manifest.find(s => s.id === sectionId);
+        if (!section) return;
+
+        try {
+            const response = await fetch(`manual/${section.file}`);
+            if (!response.ok) throw new Error(`Could not load ${section.file}`);
+            const html = await response.text();
+            manualContent.innerHTML = `<h1 data-en="${section.title_en}" data-uk="${section.title_uk}">${currentLang === 'uk' ? section.title_uk : section.title_en}</h1>${html}`;
+            
+            updateSidebar(sectionId);
+            setLang(currentLang, manualContent);
+        } catch (error) {
+            manualContent.innerHTML = `<p>${currentLang === 'en' ? 'Error loading content.' : 'Помилка завантаження вмісту.'}</p>`;
+            console.error('Failed to load manual section:', error);
+        }
+      };
+      
+      const updateSidebar = (activeSectionId) => {
+        const allMainLinks = manualNav.querySelectorAll(':scope > ul > li');
+        allMainLinks.forEach(li => {
+            const link = li.querySelector('a');
+            const submenu = li.querySelector('.submenu');
+            const sectionId = li.dataset.sectionId;
+            
+            if (sectionId === activeSectionId) {
+                li.classList.add('open');
+                link.classList.add('active');
+                if (!submenu) {
+                    const newSubmenu = document.createElement('ul');
+                    newSubmenu.className = 'submenu';
+                    const headings = manualContent.querySelectorAll('h2');
+                    headings.forEach(h => {
+                        const subLi = document.createElement('li');
+                        const subA = document.createElement('a');
+                        const enText = h.dataset.en;
+                        const ukText = h.dataset.uk;
+                        subA.dataset.en = enText;
+                        subA.dataset.uk = ukText;
+                        subA.textContent = currentLang === 'uk' ? ukText : enText;
+                        h.id = h.id || enText.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g,'');
+                        subA.href = `#${activeSectionId}#${h.id}`;
+                        subA.onclick = (e) => {
+                            e.preventDefault();
+                            h.scrollIntoView({ behavior: 'smooth' });
+                            document.querySelector('.submenu a.active-sub')?.classList.remove('active-sub');
+                            subA.classList.add('active-sub');
+                        };
+                        subLi.appendChild(subA);
+                        newSubmenu.appendChild(subLi);
+                    });
+                    if (headings.length > 0) {
+                      li.appendChild(newSubmenu);
+                    }
+                }
+            } else {
+                li.classList.remove('open');
+                link.classList.remove('active');
+                if (submenu) {
+                    submenu.remove();
+                }
+            }
+        });
+      };
+
+      const printAll = async () => {
+        if (manifest.length === 0) return;
+
+        let printContainer = document.getElementById('print-container');
+        if (printContainer) printContainer.remove();
+
+        printContainer = document.createElement('div');
+        printContainer.id = 'print-container';
+        
+        const mainTitle = document.createElement('h1');
+        mainTitle.textContent = 'BRAVEMIND Ukraine User Manual';
+        printContainer.appendChild(mainTitle);
+
+        const tocTitle = document.createElement('h2');
+        tocTitle.textContent = 'Table of Contents';
+        printContainer.appendChild(tocTitle);
+        const tocList = document.createElement('ol');
+        tocList.id = 'print-toc';
+        printContainer.appendChild(tocList);
+        
+        document.body.appendChild(printContainer);
+
+        const contentPromises = manifest.map(section => fetch(`manual/${section.file}`).then(res => res.text()));
+        const allHtml = await Promise.all(contentPromises);
+
+        allHtml.forEach((html, index) => {
+            const sectionData = manifest[index];
+            const sectionEl = document.createElement('section');
+            const titleEl = document.createElement('h1');
+            titleEl.textContent = currentLang === 'uk' ? sectionData.title_uk : sectionData.title_en;
+            sectionEl.id = `print-section-${sectionData.id}`;
+            sectionEl.appendChild(titleEl);
+            sectionEl.innerHTML += html;
+            printContainer.appendChild(sectionEl);
+
+            const tocItem = document.createElement('li');
+            tocItem.innerHTML = `<a href="#print-section-${sectionData.id}">${currentLang === 'uk' ? sectionData.title_uk : sectionData.title_en}</a>`;
+            tocList.appendChild(tocItem);
+        });
+        
+        setLang(currentLang, printContainer);
+        window.print();
+        printContainer.remove();
+      };
+      printAllBtn.addEventListener('click', printAll);
+
+      const loadManual = async () => {
+        try {
+          const response = await fetch('manual/manifest.json');
+          if (!response.ok) throw new Error('Could not load manifest');
+          manifest = await response.json();
+          
+          const ul = document.createElement('ul');
+          manifest.forEach(section => {
+            const li = document.createElement('li');
+            li.dataset.sectionId = section.id;
+            const a = document.createElement('a');
+            a.href = `#${section.id}`;
+            a.addEventListener('click', (e) => {
+              e.preventDefault();
+              history.pushState({sectionId: section.id}, '', a.href);
+              renderContent(section.id);
+            });
+            li.appendChild(a);
+            ul.appendChild(li);
+          });
+          manualNav.appendChild(ul);
+          
+          setLang(currentLang, document);
+          translateSidebar();
+
+          const initialSectionId = window.location.hash.substring(1).split('#')[0] || manifest[0]?.id;
+          if (initialSectionId) {
+            await renderContent(initialSectionId);
+            history.replaceState({sectionId: initialSectionId}, '', `#${initialSectionId}`);
+          } else {
+            manualContent.innerHTML = `<p data-en="Please select a topic from the sidebar to begin." data-uk="Будь ласка, виберіть тему з бічної панелі, щоб почати."></p>`;
+            setLang(currentLang, manualContent);
+          }
+        } catch (error) {
+          manualContent.innerHTML = `<p>${currentLang === 'en' ? 'Error loading manual.' : 'Помилка завантаження посібника.'}</p>`;
+          console.error('Failed to load manual manifest:', error);
+        }
+      };
+
+      window.addEventListener('popstate', (e) => {
+        const sectionId = e.state?.sectionId || window.location.hash.substring(1).split('#')[0] || manifest[0]?.id;
+        if(sectionId) renderContent(sectionId);
+      });
+
+      loadManual();
+    });
+  </script>
+</body>
+</html>
+

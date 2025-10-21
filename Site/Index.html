@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BRAVEMIND Ukraine</title>
+  <meta name="description" content="Evidence-based VR for trauma care in Ukraine: scenarios, research, impact stories, and ways to get involved." />
+  <style>
+    :root{
+      --bg:#ffffff; --fg:#0f172a; --muted:#475569; --card:#f8fafc; --border:#e2e8f0; --accent:#1e40af; --accent-contrast:#ffffff;
+      --pad: clamp(1rem, 3vw, 2rem);
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#0b1020; --fg:#e5e7eb; --muted:#94a3b8; --card:#0f172a; --border:#1f2937; --accent:#3b82f6; --accent-contrast:#0b1020 }
+    }
+    body.dark{ --bg:#0b1020; --fg:#e5e7eb; --muted:#94a3b8; --card:#0f172a; --border:#1f2937; --accent:#3b82f6; --accent-contrast:#0b1020 }
+
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,"Helvetica Neue",Arial; background:var(--bg); color:var(--fg); line-height:1.6}
+    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+
+    .wrap{max-width:1100px;margin:0 auto;padding:var(--pad)}
+
+    header{border-bottom:1px solid var(--border); background:linear-gradient(180deg,rgba(30,64,175,.08),transparent)}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .brand{display:flex;align-items:center;gap:.75rem}
+    .brand img{width:44px;height:44px;object-fit:contain}
+    nav { display: flex; align-items: center; gap: 1rem; }
+    nav a { font-weight: 600; color: var(--muted); }
+    nav a.active { color: var(--accent); }
+    .controls{display:flex;align-items:center; gap:.5rem}
+    .btn{border:1px solid var(--border); background:var(--card); color:var(--fg); padding:.55rem .8rem; border-radius:.625rem; cursor:pointer; font-weight:600}
+    
+    #mobile-menu-btn { display: none; padding: .55rem; }
+    @media (max-width: 800px) { 
+        nav { display: none; }
+        #mobile-menu-btn { display: inline-flex; align-items: center; justify-content: center; }
+    }
+    
+    .mobile-nav { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg); z-index: 100; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-size: 1.5rem; font-weight: 600; color: var(--fg); }
+    #close-menu-btn { position: absolute; top: var(--pad); right: var(--pad); font-size: 1.5rem; line-height: 1; padding: .25rem .75rem; }
+    
+    .partner-bar-container { border-bottom: 1px solid var(--border); }
+    .partner-bar { display: flex; align-items: center; justify-content: center; gap: 1.5rem; padding-top: .75rem; padding-bottom: .75rem; }
+    .partner-label { font-size: .9rem; color: var(--muted); font-weight: 500; }
+    .header-partner-logos { display: flex; align-items: center; gap: 2rem; filter: grayscale(100%) opacity(0.7); }
+    .header-partner-logos img { height: 28px; max-width: 100px; object-fit: contain; }
+    @media (max-width: 800px) {
+        .partner-bar { flex-direction: column; gap: .75rem; }
+        .partner-label { display: none; }
+        .header-partner-logos { gap: 1.5rem; justify-content: center; width: 100%; flex-wrap: wrap; }
+    }
+
+    main{display:block}
+    h1,h2,h3{line-height:1.25;margin:0 0 .6rem}
+    h1{font-size:clamp(1.75rem,2.5vw,2.25rem)}
+    h2{font-size:clamp(1.4rem,2vw,1.75rem)}
+    h3{font-size:1.125rem}
+    p{margin:.5rem 0 1rem; color:var(--muted)}
+    
+    /* Hero Video Styles */
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 60vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        margin-bottom: 1.25rem;
+    }
+    #hero-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -100;
+        transform: translateX(-50%) translateY(-50%);
+        background-size: cover;
+    }
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        padding: var(--pad);
+    }
+    .hero-content h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 800;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    .hero-content p {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        margin: 1rem 0 2rem;
+        color: rgba(255,255,255,0.9);
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    .hero .btn {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      padding: .75rem 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .grid{display:grid; grid-template-columns:repeat(12,1fr); gap:clamp(1rem,2.5vw,1.25rem); margin-top:.75rem}
+    .col-6{grid-column:span 6}
+    @media (max-width:800px){ .col-6{grid-column:span 12} }
+    .card{background:var(--card); border:1px solid var(--border); border-radius:1rem; padding:1rem}
+    .feature-head{display:flex;align-items:center;gap:.6rem;margin-bottom:.25rem}
+    .icon{width:40px;height:40px;display:inline-block}
+    .icon svg{width:100%;height:100%}
+
+    .ratio{position:relative; width:100%; padding-top:56.25%; border-radius:.75rem; overflow:hidden; background:#000}
+    .ratio iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+
+    #video-gallery-container { margin-top: 1.5rem }
+    .gallery-controls { display: flex; align-items: center; justify-content: flex-end; gap: .75rem; margin: .75rem 0; color: var(--muted); }
+    .gallery-controls button { border: 1px solid var(--border); background: var(--card); color: var(--fg); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-weight: bold; }
+    .gallery-controls button:disabled { cursor: not-allowed; opacity: 0.5; }
+    #thumbnail-strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: .75rem; margin-top: 1rem; }
+    .gallery-thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: .5rem; border: 2px solid transparent; cursor: pointer; opacity: 0.65; transition: opacity 150ms ease, border-color 150ms ease; }
+    .gallery-thumb:hover { opacity: 1; }
+    .gallery-thumb.active { border-color: var(--accent); opacity: 1; }
+    @media (max-width: 800px) { #thumbnail-strip { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 600px) { #thumbnail-strip { grid-template-columns: repeat(3, 1fr); } }
+
+    .donation-widget { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 2rem; text-align: center; margin: 2rem 0; }
+    .donation-amounts { display: flex; justify-content: center; gap: 1rem; margin: 1.5rem 0; flex-wrap: wrap; }
+    .donation-amount { background: var(--bg); border: 1px solid var(--border); color: var(--fg); padding: .75rem 1.5rem; border-radius: .625rem; cursor: pointer; font-weight: 600; }
+    .donation-amount.selected { background: var(--accent); color: var(--accent-contrast); border-color: var(--accent); }
+    .donate-btn { width: 100%; max-width: 300px; padding: .75rem; font-size: 1.1rem; }
+
+    footer{border-top:1px solid var(--border); padding: 2.5rem 0; color:var(--muted)}
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; max-width: 1100px; margin: 0 auto; padding: 0 var(--pad); }
+    .footer-contact { text-align: right; }
+    .footer-contact h3 { margin-top: 0; font-size: 1.1em; color: var(--fg); }
+    .footer-contact p { margin: 0.4rem 0; }
+    .footer-links a { display: block; margin-top: 0.5rem; color: var(--muted); }
+    .footer-links a:hover { color: var(--accent); }
+    footer p { margin: 0.25rem 0; }
+    @media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr; text-align: center; } .footer-contact { text-align: center; margin-top: 1.5rem; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap topbar" role="navigation" aria-label="Top bar">
+      <a href="index.html" class="brand" aria-label="Homepage">
+        <img src="assets/BRAVEMIND-Logo.png" alt="BRAVEMIND Ukraine logo" />
+        <div>
+          <strong>BRAVEMIND Ukraine</strong>
+          <div style="font-size:.925rem;color:var(--muted)">USC Institute for Creative Technologies &amp; Partners</div>
+        </div>
+      </a>
+      <nav>
+          <a href="index.html" class="active">Home</a>
+          <a href="about.html">About</a>
+          <a href="how-it-works.html">How It Works</a>
+          <a href="adaptations.html">Adaptations</a>
+          <a href="news.html">News</a>
+      </nav>
+      <div class="controls">
+        <button class="btn" type="button" id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <button class="btn" type="button" id="lang-toggle" aria-pressed="false" aria-label="Toggle language">EN / УКР</button>
+        <button class="btn" type="button" id="contrast-toggle" aria-pressed="false" aria-label="Toggle dark mode">Dark</button>
+      </div>
+    </div>
+    <div class="partner-bar-container">
+        <div class="wrap partner-bar">
+          <span class="partner-label" data-en="In partnership with:" data-uk="У партнерстві з:">In partnership with:</span>
+          <div class="header-partner-logos">
+            <img src="assets/USC.png" alt="USC Logo" />
+            <img src="assets/InternationalInstituteforPostgraduateEducation.png" alt="International Institute of Postgraduate Education Logo" />
+            <img src="assets/63f2deb8461fa01ba4dc31b5_Frame 2.svg" alt="Virry Health Logo" />
+            <img src="assets/Regent.png" alt="Regent Logo" />
+          </div>
+        </div>
+      </div>
+  </header>
+  
+  <div id="mobile-menu" class="mobile-nav">
+      <button class="btn" id="close-menu-btn" aria-label="Close menu">&times;</button>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="adaptations.html">Adaptations</a>
+      <a href="news.html">News</a>
+  </div>
+
+  <main id="content">
+    <div class="hero">
+        <div class="hero-overlay"></div>
+        <video playsinline autoplay muted loop id="hero-video">
+            <source src="assets/BM_Ukraine.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-content">
+            <h1 data-en="Hope and Healing Through Innovation" data-uk="Надія та зцілення через інновації">Hope and Healing Through Innovation</h1>
+            <p data-en="Adapting clinically-validated virtual reality therapy to address the urgent mental health needs of those impacted by the war in Ukraine." data-uk="Адаптація клінічно перевіреної терапії у віртуальній реальності для задоволення нагальних потреб у психічному здоров'ї постраждалих від війни в Україні.">Adapting clinically-validated virtual reality therapy to address the urgent mental health needs of those impacted by the war in Ukraine.</p>
+            <a href="about.html" class="btn" data-en="Learn More" data-uk="Дізнатися більше">Learn More</a>
+        </div>
+    </div>
+
+    <div class="wrap">
+      <h1 data-en="Trauma-Focused VR, Built for Ukraine" data-uk="VR-терапія для травми, створена для України">Trauma-Focused VR, Built for Ukraine</h1>
+      <div class="grid">
+        <article class="card col-6">
+          <div class="feature-head">
+            <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3h11l-3 4 3 4H6v10" /></svg></span>
+            <h3 data-en="Ukraine-Specific Scenarios" data-uk="Сценарії для України">Ukraine-Specific Scenarios</h3>
+          </div>
+          <p data-en="Environments modeled after the realities of conflict, displacement, and civilian trauma in Ukraine." data-uk="Середовища змодельовані відповідно до реалій війни, переміщення та цивільних травм в Україні.">Environments modeled after the realities of conflict, displacement, and civilian trauma in Ukraine.</p>
+        </article>
+        <article class="card col-6">
+          <div class="feature-head">
+            <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h16M7 16v-5m5 5V5m5 11v-8" /></svg></span>
+            <h3 data-en="Evidence-Based Results" data-uk="Результати, засновані на доказах">Evidence-Based Results</h3>
+          </div>
+          <p data-en="Backed by 15+ years of research on PTSD treatment effectiveness in military and civilian populations." data-uk="Підтверджено понад 15 роками досліджень ефективності лікування ПТСР серед військових та цивільних.">Backed by 15+ years of research on PTSD treatment effectiveness in military and civilian populations.</p>
+        </article>
+      </div>
+      
+      <section id="impact" aria-labelledby="impact-h">
+          <h2 id="impact-h" data-en="Impact Stories" data-uk="Історії впливу">Impact Stories</h2>
+          <p data-en="Hear from clinicians who have helped research BRAVEMIND in Ukraine. Their experiences highlight why BRAVEMIND has so much potential." data-uk="Почуйте історії клініцистів та учасників, які використовували BRAVEMIND в Україні. Їхній досвід підкреслює покращену залученість, зниження стигми та значуще відновлення.">Hear from clinicians who have helped research BRAVEMIND in Ukraine. Their experiences highlight why BRAVEMIND has so much potential.</p>
+          <div id="video-gallery-container" data-yt='["om1DwKz3_Ck","52oE1GwliMA","xJFl_ZGK4Yc","zEhmyLLZ_Ws","Iqz0psoyHGU", "fZgfE19U8fI", "tj53wWS21Xw"]'>
+              <div id="main-video-player" class="ratio"></div>
+              <div class="gallery-controls">
+                  <button id="prev-video" aria-label="Previous video">&lt;</button>
+                  <span id="video-counter"></span>
+                  <button id="next-video" aria-label="Next video">&gt;</button>
+              </div>
+              <div id="thumbnail-strip"></div>
+          </div>
+      </section>
+
+      <div class="donation-widget">
+        <h2 data-en="Support Our Mission" data-uk="Підтримайте нашу місію">Support Our Mission</h2>
+        <p data-en="Your donation helps expand access to trauma-informed care in Ukraine." data-uk="Ваш внесок допомагає розширити доступ до травмо-інформованої допомоги в Україні.">Your donation helps expand access to trauma-informed care in Ukraine.</p>
+        <div class="donation-amounts">
+          <button class="donation-amount" data-amount="25">$25</button>
+          <button class="donation-amount selected" data-amount="50">$50</button>
+          <button class="donation-amount" data-amount="100">$100</button>
+          <button class="donation-amount" data-amount="250">$250</button>
+        </div>
+        <button class="btn btn-primary donate-btn" data-en="Donate Now" data-uk="Зробити внесок">Donate Now</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+        <div>
+            <p>&copy; 2025 BRAVEMIND Ukraine Project</p>
+            <p>USC Institute for Creative Technologies & Partners</p>
+        </div>
+        <div class="footer-contact">
+            <h3 data-en="Contact & Links" data-uk="Контакти та посилання">Contact & Links</h3>
+            <div class="footer-links">
+                <a href="https://www.youtube.com/@SkipRizzoClinicalVR" target="_blank" rel="noopener" data-en="Dr. Skip Rizzo's Clinical VR Channel" data-uk="Канал клінічної ВР доктора Скіпа Ріццо">Dr. Skip Rizzo's Clinical VR Channel</a>
+                <a href="https://www.virryhealth.com/" target="_blank" rel="noopener">Virry Health</a>
+                <a href="https://americanprogram.net/" target="_blank" rel="noopener" data-en="Int'l Institute for Postgraduate Ed." data-uk="Міжнародний інститут післядипломної освіти">Int'l Institute for Postgraduate Ed.</a>
+            </div>
+        </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const contrastBtn = document.getElementById('contrast-toggle');
+      const isDark = () => document.body.classList.contains('dark');
+      const setTheme = mode => {
+        if(mode==='dark'){ document.body.classList.add('dark'); } else { document.body.classList.remove('dark'); }
+        localStorage.setItem('theme', mode);
+        contrastBtn.textContent = isDark() ? 'Light' : 'Dark';
+        contrastBtn.setAttribute('aria-pressed', String(isDark()));
+      };
+      (function initTheme(){
+        const stored = localStorage.getItem('theme');
+        if (stored) setTheme(stored);
+        else if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) setTheme('dark');
+        else setTheme('light');
+      })();
+      contrastBtn.addEventListener('click', () => setTheme(isDark() ? 'light' : 'dark'));
+
+      const langBtn = document.getElementById('lang-toggle');
+      const setLang = next => {
+        document.documentElement.lang = next;
+        document.querySelectorAll('[data-en]').forEach(el => {
+          const target_text = next === 'uk' ? el.getAttribute('data-uk') : el.getAttribute('data-en');
+          if (target_text != null) { el.innerHTML = target_text; }
+        });
+        langBtn.textContent = next === 'uk' ? 'UKR / EN' : 'EN / УКР';
+        localStorage.setItem('lang', next);
+      };
+      setLang(localStorage.getItem('lang') || 'en');
+      langBtn.addEventListener('click', () => {
+        const cur = localStorage.getItem('lang') || 'en';
+        setLang(cur.startsWith('en') ? 'uk' : 'en');
+      });
+
+      const galleryContainer = document.getElementById('video-gallery-container');
+      if (galleryContainer) {
+          const mainPlayer = document.getElementById('main-video-player');
+          const thumbStrip = document.getElementById('thumbnail-strip');
+          const prevBtn = document.getElementById('prev-video');
+          const nextBtn = document.getElementById('next-video');
+          const counter = document.getElementById('video-counter');
+          const ids = JSON.parse(galleryContainer.dataset.yt);
+          let currentIndex = 0;
+          const loadVideo = (index, autoplay = false) => {
+              if (index < 0 || index >= ids.length) return;
+              currentIndex = index;
+              const iframe = document.createElement('iframe');
+              iframe.title = 'YouTube video';
+              iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+              iframe.allowFullscreen = true;
+              let src = `https://www.youtube.com/embed/${ids[currentIndex]}`;
+              if (autoplay) {
+                  src += '?autoplay=1';
+              }
+              iframe.src = src;
+              mainPlayer.innerHTML = '';
+              mainPlayer.appendChild(iframe);
+              document.querySelectorAll('.gallery-thumb').forEach((thumb, i) => {
+                  thumb.classList.toggle('active', i === currentIndex);
+              });
+              counter.textContent = `Video ${currentIndex + 1} of ${ids.length}`;
+              prevBtn.disabled = (currentIndex === 0);
+              nextBtn.disabled = (currentIndex === ids.length - 1);
+          };
+          ids.forEach((id, index) => {
+              const img = document.createElement('img');
+              img.className = 'gallery-thumb';
+              img.src = `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
+              img.alt = `Thumbnail for video ${index + 1}`;
+              img.loading = 'lazy';
+              img.decoding = 'async';
+              img.addEventListener('click', () => loadVideo(index, true));
+              thumbStrip.appendChild(img);
+          });
+          prevBtn.addEventListener('click', () => loadVideo(currentIndex - 1, true));
+          nextBtn.addEventListener('click', () => loadVideo(currentIndex + 1, true));
+          loadVideo(0, false); // Load first video without autoplay
+      }
+      
+      document.querySelectorAll('.donation-amount').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelector('.donation-amount.selected').classList.remove('selected');
+            btn.classList.add('selected');
+        });
+      });
+
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const closeMenuBtn = document.getElementById('close-menu-btn');
+      if (mobileMenuBtn && mobileMenu && closeMenuBtn) {
+          mobileMenuBtn.addEventListener('click', () => {
+              mobileMenu.classList.add('open');
+              mobileMenuBtn.setAttribute('aria-expanded', 'true');
+          });
+          closeMenuBtn.addEventListener('click', () => {
+              mobileMenu.classList.remove('open');
+              mobileMenuBtn.setAttribute('aria-expanded', 'false');
+          });
+      }
+    });
+  </script>
+</body>
+</html>
+
