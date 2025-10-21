@@ -113,8 +113,6 @@
     }
     .post-gallery img {
       width: 100%;
-      /* height: 100%; (Removed) */
-      /* object-fit: cover; (Removed) */
       border-radius: .625rem;
       margin: 0;
     }
@@ -126,77 +124,21 @@
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap topbar" role="navigation" aria-label="Top bar">
-      <a href="index.html" class="brand" aria-label="Homepage">
-        <img src="assets/BRAVEMIND-Logo.png" alt="BRAVEMIND Ukraine logo" />
-        <div>
-          <strong>BRAVEMIND Ukraine</strong>
-          <div style="font-size:.925rem;color:var(--muted)">USC Institute for Creative Technologies &amp; Partners</div>
-        </div>
-      </a>
-      <nav>
-          <a href="index.html">Home</a>
-          <a href="about.html">About</a>
-          <a href="how-it-works.html">How It Works</a>
-          <a href="adaptations.html">Adaptations</a>
-          <a href="news.html" class="active">News</a>
-      </nav>
-      <div class="controls">
-        <button class="btn" type="button" id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </button>
-        <button class="btn" type="button" id="lang-toggle" aria-pressed="false" aria-label="Toggle language">EN / УКР</button>
-        <button class="btn" type="button" id="contrast-toggle" aria-pressed="false" aria-label="Toggle dark mode">Dark</button>
-      </div>
-    </div>
-    <div class="partner-bar-container">
-        <div class="wrap partner-bar">
-          <span class="partner-label" data-en="In partnership with:" data-uk="У партнерстві з:">In partnership with:</span>
-          <div class="header-partner-logos">
-            <img src="assets/USC.png" alt="USC Logo" />
-            <img src="assets/InternationalInstituteforPostgraduateEducation.png" alt="International Institute of Postgraduate Education Logo" />
-            <img src="assets/63f2deb8461fa01ba4dc31b5_Frame 2.svg" alt="Virry Health Logo" />
-            <img src="assets/Regent.png" alt="Regent Logo" />
-          </div>
-        </div>
-      </div>
-  </header>
-  
-  <div id="mobile-menu" class="mobile-nav">
-      <button class="btn" id="close-menu-btn" aria-label="Close menu">&times;</button>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="how-it-works.html">How It Works</a>
-      <a href="adaptations.html">Adaptations</a>
-      <a href="news.html">News</a>
-  </div>
+  <header></header>
 
   <main id="content" class="wrap">
     <h1 data-en="News &amp; Updates" data-uk="Новини та оновлення">News &amp; Updates</h1>
-    <!-- The dynamic blog content will be injected here -->
     <div id="app-root"></div>
   </main>
 
-  <footer>
-    <div class="footer-grid">
-        <div>
-            <p>&copy; 2025 BRAVEMIND Ukraine Project</p>
-            <p>USC Institute for Creative Technologies & Partners</p>
-        </div>
-        <div class="footer-contact">
-            <h3 data-en="Contact & Links" data-uk="Контакти та посилання">Contact & Links</h3>
-            <div class="footer-links">
-                <a href="https://www.youtube.com/@SkipRizzoClinicalVR" target="_blank" rel="noopener" data-en="Dr. Skip Rizzo's Clinical VR Channel" data-uk="Канал клінічної ВР доктора Скіпа Ріццо">Dr. Skip Rizzo's Clinical VR Channel</a>
-                <a href="https://www.virryhealth.com/" target="_blank" rel="noopener">Virry Health</a>
-                <a href="https://americanprogram.net/" target="_blank" rel="noopener" data-en="Int'l Institute for Postgraduate Ed." data-uk="Міжнародний інститут післядипломної освіти">Int'l Institute for Postgraduate Ed.</a>
-            </div>
-        </div>
-    </div>
-  </footer>
+  <footer></footer>
+
+  <script src="header.js"></script>
+  <script src="posts.js"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // --- Standard Site Controls (from header.js) ---
       const contrastBtn = document.getElementById('contrast-toggle');
       const isDark = () => document.body.classList.contains('dark');
       const setTheme = mode => {
@@ -243,31 +185,19 @@
           });
       }
 
-      // --- NEW BLOG SYSTEM LOGIC ---
-
-      // The blog posts are now in a separate file: posts.js
-      // This makes it much easier to add new articles without touching this file.
-    });
-  </script>
-
-  <!-- Load the news posts from the separate content file -->
-  <script src="posts.js"></script>
-
-  <!-- This script runs AFTER posts.js is loaded -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
+      // --- BLOG SYSTEM LOGIC ---
       const appRoot = document.getElementById('app-root');
 
       // If there are no posts in posts.js, display a message.
       if (typeof posts === 'undefined' || posts.length === 0) {
           if(appRoot) {
-               appRoot.innerHTML = '<p data-en="Check back soon for the latest news, press releases, and updates from the field." data-uk="Заходьте незабаром, щоб дізнатися останні новини, прес-релізи та оновлення з місця подій.">Check back soon for the latest news, press releases, and updates from the field.</p>';
-               // Re-run the language toggle to ensure this new text is translated if needed
-               const curLang = localStorage.getItem('lang') || 'en';
-               document.querySelectorAll('[data-en]').forEach(el => {
+              appRoot.innerHTML = '<p data-en="Check back soon for the latest news, press releases, and updates from the field." data-uk="Заходьте незабаром, щоб дізнатися останні новини, прес-релізи та оновлення з місця подій.">Check back soon for the latest news, press releases, and updates from the field.</p>';
+              // Re-run the language toggle to ensure this new text is translated if needed
+              const curLang = localStorage.getItem('lang') || 'en';
+              document.querySelectorAll('[data-en]').forEach(el => {
                   const target_text = curLang === 'uk' ? el.getAttribute('data-uk') : el.getAttribute('data-en');
                   if (target_text != null) { el.innerHTML = target_text; }
-               });
+              });
           }
           return; // Stop here if there are no posts
       }
@@ -325,6 +255,6 @@
       handleRouteChange(); // Initial render
     });
   </script>
+  <script src="footer.js"></script>
 </body>
 </html>
-

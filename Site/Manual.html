@@ -122,10 +122,41 @@
         margin-top: 1.5rem;
         width: 100%;
     }
+
+    /* --- Mobile Nav Styles --- */
+    #manual-mobile-nav {
+      display: none; /* Hidden on desktop */
+      margin-bottom: 1.5rem;
+    }
+    #manual-mobile-nav label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: .5rem;
+      color: var(--fg);
+    }
+    #manual-select {
+      width: 100%;
+      padding: .75rem;
+      font-size: 1rem;
+      background: var(--card);
+      color: var(--fg);
+      border: 1px solid var(--border);
+      border-radius: .625rem;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right .75rem center;
+      background-size: 16px 16px;
+    }
+    body.dark #manual-select {
+       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23e5e7eb' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    }
     
     @media (max-width: 900px) {
         .manual-layout { grid-template-columns: 1fr; }
         #manual-sidebar { display: none; }
+        #manual-mobile-nav { display: block; } /* Show mobile nav */
     }
 
     main{display:block}
@@ -146,177 +177,220 @@
     
     /* Print Styles */
     @media print {
-      body { background: #fff; color: #000; counter-reset: page; }
-      header, footer, #manual-sidebar { display: none; }
-      main { padding: 0; }
+      body { background: #fff; color: #000; }
+      body:not(.printing) * { display: none !important; }
+      body.printing > *:not(#print-container) { display: none !important; }
+      body.printing #print-container { display: block !important; }
+      
+      header, footer, #manual-sidebar, #manual-mobile-nav, main { display: none !important; }
       .wrap { max-width: 100%; padding: 0; }
       .manual-layout { display: block !important; }
-      h1, h2, h3 { color: #000; }
+      h1, h2, h3 { color: #000; page-break-after: avoid; }
       p, li { color: #333; }
       a { color: #000; text-decoration: none; }
       
-      body > *:not(#print-container) { display: none; }
-      #print-container { display: block; }
-      #print-container section { page-break-after: always; }
-      #print-container h1, #print-container h2 { border-bottom: 1px solid #ccc; }
-      #print-toc { list-style: none; padding: 0; }
-      #print-toc a { text-decoration: none; }
-      #print-toc li { margin-bottom: 0.5rem; }
+      #print-container { display: block; font-family: Georgia, serif; font-size: 11pt; line-height: 1.5; }
+      
+      /* Cover Page */
+      #print-cover {
+        page: cover;
+        page-break-after: always;
+        text-align: center;
+        padding-top: 30%;
+      }
+      #print-cover h1 {
+        font-size: 28pt;
+        margin-bottom: 1rem;
+        border: none;
+      }
+      #print-cover p {
+        font-size: 14pt;
+        color: #666;
+      }
+      
+      /* Table of Contents */
+      #print-toc-section {
+        page: toc;
+        page-break-after: always;
+      }
+      #print-toc-section h2 {
+        font-size: 20pt;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid #333;
+        padding-bottom: 0.5rem;
+      }
+      #print-toc {
+        list-style: none;
+        padding: 0;
+        counter-reset: toc-counter;
+      }
+      #print-toc li {
+        margin-bottom: 0.75rem;
+        counter-increment: toc-counter;
+      }
+      #print-toc li::before {
+        content: counter(toc-counter) ". ";
+        font-weight: bold;
+        margin-right: 0.5rem;
+      }
+      
+      /* Content Sections */
+      #print-container section {
+        page: content;
+        page-break-before: always;
+      }
+      #print-container section:first-of-type {
+        counter-reset: page 1;
+      }
+      #print-container section h1 {
+        font-size: 18pt;
+        border-bottom: 2px solid #333;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+      #print-container section h2 {
+        font-size: 14pt;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 0.25rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      #print-container section h3 {
+        font-size: 12pt;
+        margin-top: 1rem;
+      }
 
-      @page {
+      /* Page numbering - only for content pages */
+      @page cover {
+        @bottom-center { content: none; }
+      }
+      @page toc {
+        @bottom-center { content: none; }
+      }
+      @page content {
         @bottom-center {
           content: "Page " counter(page);
+          font-family: Georgia, serif;
+          font-size: 10pt;
         }
       }
+      
+      /* Prevent awkward breaks */
+      h1, h2, h3 { page-break-after: avoid; }
+      p, li { orphans: 3; widows: 3; }
+      ul, ol { page-break-inside: avoid; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap topbar" role="navigation" aria-label="Top bar">
-      <a href="index.html" class="brand" aria-label="Homepage">
-        <img src="assets/BRAVEMIND-Logo.png" alt="BRAVEMIND Ukraine logo" />
-        <div>
-          <strong>BRAVEMIND Ukraine</strong>
-          <div style="font-size:.925rem;color:var(--muted)">USC Institute for Creative Technologies & Partners</div>
-        </div>
-      </a>
-      <nav>
-          <a href="index.html">Home</a>
-          <a href="about.html">About</a>
-          <a href="how-it-works.html">How It Works</a>
-          <a href="adaptations.html">Adaptations</a>
-          <a href="news.html">News</a>
-      </nav>
-      <div class="controls">
-        <button class="btn" type="button" id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </button>
-        <button class="btn" type="button" id="lang-toggle" aria-pressed="false" aria-label="Toggle language">EN / УКР</button>
-        <button class="btn" type="button" id="contrast-toggle" aria-pressed="false" aria-label="Toggle dark mode">Dark</button>
-      </div>
-    </div>
-    <div class="partner-bar-container">
-        <div class="wrap partner-bar">
-          <span class="partner-label" data-en="In partnership with:" data-uk="У партнерстві з:">In partnership with:</span>
-          <div class="header-partner-logos">
-            <img src="assets/USC.png" alt="USC Logo" />
-            <img src="assets/InternationalInstituteforPostgraduateEducation.png" alt="International Institute of Postgraduate Education Logo" />
-            <img src="assets/63f2deb8461fa01ba4dc31b5_Frame 2.svg" alt="Virry Health Logo" />
-            <img src="assets/Regent.png" alt="Regent Logo" />
-          </div>
-        </div>
-      </div>
-  </header>
-  
-  <div id="mobile-menu" class="mobile-nav">
-      <button class="btn" id="close-menu-btn" aria-label="Close menu">&times;</button>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="how-it-works.html">How It Works</a>
-      <a href="adaptations.html">Adaptations</a>
-      <a href="news.html">News</a>
-  </div>
+  <header></header>
 
   <main class="wrap manual-layout">
+    <div id="manual-mobile-nav">
+      <label for="manual-select" data-en="Manual Navigation" data-uk="Навігація посібника">Manual Navigation</label>
+      <select id="manual-select"></select>
+    </div>
+    
     <aside id="manual-sidebar">
       <div class="sidebar-title">
         <a href="manual.html" data-en="User Manual" data-uk="Посібник користувача">User Manual</a>
       </div>
       <nav id="manual-nav">
-        <!-- Sidebar navigation will be built here by JavaScript -->
-      </nav>
+        </nav>
       <button id="print-all-btn" class="btn print-all-btn" data-en="Print All" data-uk="Роздрукувати все">Print All</button>
     </aside>
     <article id="manual-content">
-        <!-- Content will be loaded here by JavaScript -->
-    </article>
+        </article>
   </main>
 
-  <footer class="wrap">
-    <div class="footer-grid">
-        <div>
-            <p>&copy; 2025 BRAVEMIND Ukraine Project</p>
-            <p>USC Institute for Creative Technologies & Partners</p>
-        </div>
-        <div class="footer-contact">
-            <h3 data-en="Contact & Links" data-uk="Контакти та посилання">Contact & Links</h3>
-            <div class="footer-links">
-                <a href="https://www.youtube.com/@SkipRizzoClinicalVR" target="_blank" rel="noopener" data-en="Dr. Skip Rizzo's Clinical VR Channel" data-uk="Канал клінічної ВР доктора Скіпа Ріццо">Dr. Skip Rizzo's Clinical VR Channel</a>
-                <a href="https://www.virryhealth.com/" target="_blank" rel="noopener">Virry Health</a>
-                <a href="https://americanprogram.net/" target="_blank" rel="noopener" data-en="Int'l Institute for Postgraduate Ed." data-uk="Міжнародний інститут післядипломної освіти">Int'l Institute for Postgraduate Ed.</a>
-            </div>
-        </div>
-    </div>
-  </footer>
+  <footer></footer>
 
+  <script src="header.js"></script>
   <script>
+    // --- PASSWORD PROTECTION ---
+    const MANUAL_PASSWORD = "bravemind2025"; // Change this to your desired password
+
+    function checkAccess() {
+        const stored = sessionStorage.getItem('manualAccess');
+        if (stored === 'granted') return true;
+        
+        const password = prompt('Enter password to access the manual:');
+        if (password === MANUAL_PASSWORD) {
+            sessionStorage.setItem('manualAccess', 'granted');
+            return true;
+        }
+        alert('Incorrect password. Redirecting to homepage.');
+        window.location.href = 'index.html';
+        return false;
+    }
+
+    if (!checkAccess()) {
+        document.body.innerHTML = '<div style="padding: 2rem; text-align: center;"><p>Access denied</p></div>';
+        throw new Error('Access denied'); // Stop script execution
+    }
+    // --- END PASSWORD PROTECTION ---
+
     document.addEventListener('DOMContentLoaded', () => {
-      // --- Standard Site Controls ---
-      const contrastBtn = document.getElementById('contrast-toggle');
-      const langBtn = document.getElementById('lang-toggle');
-      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const closeMenuBtn = document.getElementById('close-menu-btn');
-      const isDark = () => document.body.classList.contains('dark');
+      // --- All Standard Site Controls (contrast, lang, mobile menu) are in header.js ---
+      
       let currentLang = localStorage.getItem('lang') || 'en';
-      
-      const setTheme = mode => {
-        document.body.classList.toggle('dark', mode === 'dark');
-        localStorage.setItem('theme', mode);
-        contrastBtn.textContent = mode === 'dark' ? 'Light' : 'Dark';
-      };
-
-      const setLang = (lang, rootElement = document) => {
-        document.documentElement.lang = lang;
-        rootElement.querySelectorAll('[data-en]').forEach(el => {
-          const text = lang === 'uk' ? el.dataset.uk : el.dataset.en;
-          if (text) el.innerHTML = text;
-        });
-        langBtn.textContent = lang === 'uk' ? 'UKR / EN' : 'EN / УКР';
-        localStorage.setItem('lang', lang);
-      };
-
-      const storedTheme = localStorage.getItem('theme') || (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      setTheme(storedTheme);
-
-      contrastBtn.addEventListener('click', () => setTheme(isDark() ? 'light' : 'dark'));
-      langBtn.addEventListener('click', () => {
-        currentLang = currentLang === 'en' ? 'uk' : 'en';
-        setLang(currentLang, document);
-        translateSidebar();
-        const currentSectionId = window.location.hash.substring(1).split('#')[0] || (manifest.length > 0 ? manifest[0].id : null);
-        if (currentSectionId) renderContent(currentSectionId);
-      });
-      
-      if (mobileMenuBtn && mobileMenu && closeMenuBtn) {
-          mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
-          closeMenuBtn.addEventListener('click', () => mobileMenu.classList.remove('open'));
-      }
-      
-      // --- Dynamic Manual Logic ---
       let manifest = [];
       const manualNav = document.getElementById('manual-nav');
       const manualContent = document.getElementById('manual-content');
       const printAllBtn = document.getElementById('print-all-btn');
+      const manualSelect = document.getElementById('manual-select'); 
+
+      // --- Listen for the custom language change event from header.js ---
+      document.addEventListener('languageChanged', (e) => {
+          currentLang = e.detail.newLang;
+          translateSidebar();
+          // Re-render the current content to get its translations
+          const currentSectionId = window.location.hash.substring(1).split('#')[0] || (manifest.length > 0 ? manifest[0].id : null);
+          if (currentSectionId) {
+            renderContent(currentSectionId);
+          }
+      });
+      
+      // --- Dynamic Manual Logic ---
+
+      // Helper function to translate dynamically loaded content
+      // (header.js's function runs too early for this)
+      const setLangManual = (lang, rootElement) => {
+          if (!rootElement) return;
+          rootElement.querySelectorAll('[data-en]').forEach(el => {
+              const text = lang === 'uk' ? el.dataset.uk : el.dataset.en;
+              if (text) el.innerHTML = text;
+          });
+      };
 
       const translateSidebar = () => {
-        manualNav.querySelectorAll(':scope > ul > li > a').forEach(a => {
-            const li = a.parentElement;
-            const sectionId = li.dataset.sectionId;
-            const section = manifest.find(s => s.id === sectionId);
-            if(section) {
-                a.textContent = currentLang === 'uk' ? section.title_uk : section.title_en;
-            }
-        });
-        manualNav.querySelectorAll('.submenu a').forEach(a => {
-            a.textContent = currentLang === 'uk' ? a.dataset.uk : a.dataset.en;
-        });
+        // Translate desktop sidebar
+        if (manualNav) {
+            manualNav.querySelectorAll(':scope > ul > li > a').forEach(a => {
+                const li = a.parentElement;
+                const sectionId = li.dataset.sectionId;
+                const section = manifest.find(s => s.id === sectionId);
+                if(section) {
+                    a.textContent = currentLang === 'uk' ? section.title_uk : section.title_en;
+                }
+            });
+            manualNav.querySelectorAll('.submenu a').forEach(a => {
+                a.textContent = currentLang === 'uk' ? a.dataset.uk : a.dataset.en;
+            });
+        }
+        // Translate mobile dropdown
+        if (manualSelect) {
+            manualSelect.querySelectorAll('option').forEach(opt => {
+                if (opt.dataset.en) { // Check if it's a translatable option
+                    opt.textContent = currentLang === 'uk' ? opt.dataset.uk : opt.dataset.en;
+                }
+            });
+        }
       };
 
       const renderContent = async (sectionId) => {
         const section = manifest.find(s => s.id === sectionId);
-        if (!section) return;
+        if (!section || !manualContent) return;
 
         try {
             const response = await fetch(`manual/${section.file}`);
@@ -325,7 +399,12 @@
             manualContent.innerHTML = `<h1 data-en="${section.title_en}" data-uk="${section.title_uk}">${currentLang === 'uk' ? section.title_uk : section.title_en}</h1>${html}`;
             
             updateSidebar(sectionId);
-            setLang(currentLang, manualContent);
+            setLangManual(currentLang, manualContent); // Translate the new content
+            
+            // Also update the select dropdown to be in sync
+            if (manualSelect) {
+                manualSelect.value = sectionId;
+            }
         } catch (error) {
             manualContent.innerHTML = `<p>${currentLang === 'en' ? 'Error loading content.' : 'Помилка завантаження вмісту.'}</p>`;
             console.error('Failed to load manual section:', error);
@@ -333,6 +412,7 @@
       };
       
       const updateSidebar = (activeSectionId) => {
+        if (!manualNav || !manualContent) return;
         const allMainLinks = manualNav.querySelectorAll(':scope > ul > li');
         allMainLinks.forEach(li => {
             const link = li.querySelector('a');
@@ -341,7 +421,7 @@
             
             if (sectionId === activeSectionId) {
                 li.classList.add('open');
-                link.classList.add('active');
+                if (link) link.classList.add('active');
                 if (!submenu) {
                     const newSubmenu = document.createElement('ul');
                     newSubmenu.className = 'submenu';
@@ -354,7 +434,7 @@
                         subA.dataset.en = enText;
                         subA.dataset.uk = ukText;
                         subA.textContent = currentLang === 'uk' ? ukText : enText;
-                        h.id = h.id || enText.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g,'');
+                        h.id = h.id || (enText || 'section').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g,'');
                         subA.href = `#${activeSectionId}#${h.id}`;
                         subA.onclick = (e) => {
                             e.preventDefault();
@@ -371,7 +451,7 @@
                 }
             } else {
                 li.classList.remove('open');
-                link.classList.remove('active');
+                if (link) link.classList.remove('active');
                 if (submenu) {
                     submenu.remove();
                 }
@@ -388,21 +468,47 @@
         printContainer = document.createElement('div');
         printContainer.id = 'print-container';
         
-        const mainTitle = document.createElement('h1');
-        mainTitle.textContent = 'BRAVEMIND Ukraine User Manual';
-        printContainer.appendChild(mainTitle);
+        // --- Cover Page ---
+        const coverPage = document.createElement('div');
+        coverPage.id = 'print-cover';
+        const coverTitle = document.createElement('h1');
+        coverTitle.textContent = 'BRAVEMIND Ukraine';
+        const coverSubtitle = document.createElement('h2');
+        coverSubtitle.textContent = 'User Manual';
+        coverSubtitle.style.fontSize = '20pt';
+        coverSubtitle.style.fontWeight = 'normal';
+        coverSubtitle.style.marginTop = '1rem';
+        const coverDate = document.createElement('p');
+        coverDate.textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        coverDate.style.marginTop = '2rem';
+        const coverOrg = document.createElement('p');
+        coverOrg.textContent = 'USC Institute for Creative Technologies & Partners';
+        coverOrg.style.marginTop = '0.5rem';
+        coverPage.appendChild(coverTitle);
+        coverPage.appendChild(coverSubtitle);
+        coverPage.appendChild(coverDate);
+        coverPage.appendChild(coverOrg);
+        printContainer.appendChild(coverPage);
 
+        // --- Table of Contents Page ---
+        const tocSection = document.createElement('div');
+        tocSection.id = 'print-toc-section';
         const tocTitle = document.createElement('h2');
         tocTitle.textContent = 'Table of Contents';
-        printContainer.appendChild(tocTitle);
-        const tocList = document.createElement('ol');
+        tocSection.appendChild(tocTitle);
+        const tocList = document.createElement('ul');
         tocList.id = 'print-toc';
-        printContainer.appendChild(tocList);
+        tocSection.appendChild(tocList);
+        printContainer.appendChild(tocSection);
         
         document.body.appendChild(printContainer);
 
+        // --- Load all content ---
         const contentPromises = manifest.map(section => fetch(`manual/${section.file}`).then(res => res.text()));
         const allHtml = await Promise.all(contentPromises);
+
+        // First pass: create all sections
+        const tocEntries = [];
 
         allHtml.forEach((html, index) => {
             const sectionData = manifest[index];
@@ -414,16 +520,37 @@
             sectionEl.innerHTML += html;
             printContainer.appendChild(sectionEl);
 
+            // Store TOC entry
+            tocEntries.push({
+                title: currentLang === 'uk' ? sectionData.title_uk : sectionData.title_en,
+                id: sectionData.id
+            });
+        });
+
+        // Second pass: populate TOC with section titles only
+        tocEntries.forEach(entry => {
             const tocItem = document.createElement('li');
-            tocItem.innerHTML = `<a href="#print-section-${sectionData.id}">${currentLang === 'uk' ? sectionData.title_uk : sectionData.title_en}</a>`;
+            tocItem.textContent = entry.title;
             tocList.appendChild(tocItem);
         });
         
-        setLang(currentLang, printContainer);
-        window.print();
-        printContainer.remove();
+        setLangManual(currentLang, printContainer);
+        
+        // Add printing class to body and give time for rendering
+        document.body.classList.add('printing');
+        
+        // Longer delay to ensure DOM is fully rendered and styled before printing
+        setTimeout(() => {
+            window.print();
+            // Clean up after print dialog closes
+            setTimeout(() => {
+                document.body.classList.remove('printing');
+                printContainer.remove();
+            }, 500);
+        }, 250);
       };
-      printAllBtn.addEventListener('click', printAll);
+      
+      if(printAllBtn) printAllBtn.addEventListener('click', printAll);
 
       const loadManual = async () => {
         try {
@@ -431,8 +558,18 @@
           if (!response.ok) throw new Error('Could not load manifest');
           manifest = await response.json();
           
-          const ul = document.createElement('ul');
+          if(!manualNav || !manualContent || !manualSelect) return; 
+          
+          const ul = document.createElement('ul'); 
+          
+          const defaultOption = document.createElement('option');
+          defaultOption.value = "";
+          defaultOption.dataset.en = "Select a section...";
+          defaultOption.dataset.uk = "Оберіть розділ...";
+          manualSelect.appendChild(defaultOption);
+
           manifest.forEach(section => {
+            // --- 1. Desktop Sidebar Logic ---
             const li = document.createElement('li');
             li.dataset.sectionId = section.id;
             const a = document.createElement('a');
@@ -444,10 +581,26 @@
             });
             li.appendChild(a);
             ul.appendChild(li);
+
+            // --- 2. New Mobile Dropdown Logic ---
+            const option = document.createElement('option');
+            option.value = section.id;
+            option.dataset.en = section.title_en;
+            option.dataset.uk = section.title_uk;
+            manualSelect.appendChild(option);
           });
           manualNav.appendChild(ul);
+
+          manualSelect.addEventListener('change', (e) => {
+            const sectionId = e.target.value;
+            if (sectionId) {
+              history.pushState({sectionId: sectionId}, '', `#${sectionId}`);
+              renderContent(sectionId);
+            }
+          });
           
-          setLang(currentLang, document);
+          // header.js has already translated static elements.
+          // We just need to translate the *newly added* dynamic elements.
           translateSidebar();
 
           const initialSectionId = window.location.hash.substring(1).split('#')[0] || manifest[0]?.id;
@@ -456,10 +609,10 @@
             history.replaceState({sectionId: initialSectionId}, '', `#${initialSectionId}`);
           } else {
             manualContent.innerHTML = `<p data-en="Please select a topic from the sidebar to begin." data-uk="Будь ласка, виберіть тему з бічної панелі, щоб почати."></p>`;
-            setLang(currentLang, manualContent);
+            setLangManual(currentLang, manualContent); // Use helper
           }
         } catch (error) {
-          manualContent.innerHTML = `<p>${currentLang === 'en' ? 'Error loading manual.' : 'Помилка завантаження посібника.'}</p>`;
+          if (manualContent) manualContent.innerHTML = `<p>${currentLang === 'en' ? 'Error loading manual.' : 'Помилка завантаження посібника.'}</p>`;
           console.error('Failed to load manual manifest:', error);
         }
       };
@@ -472,6 +625,6 @@
       loadManual();
     });
   </script>
+  <script src="footer.js"></script>
 </body>
 </html>
-
