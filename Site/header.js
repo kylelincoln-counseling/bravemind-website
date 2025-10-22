@@ -31,7 +31,7 @@ const headerHTML = `
         <div class="header-partner-logos">
           <img src="assets/USC.png" alt="USC Logo" />
           <img src="assets/InternationalInstituteforPostgraduateEducation.png" alt="International Institute of Postgraduate Education Logo" />
-          <img src="assetsassets/63f2deb8461fa01ba4dc31b5_Frame 2.svg" alt="Virry Health Logo" />
+          <img src="assets/63f2deb8461fa01ba4dc31b5_Frame 2.svg" alt="Virry Health Logo" />
           <img src="assets/Regent.png" alt="Regent Logo" />
         </div>
       </div>
