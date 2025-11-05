@@ -130,9 +130,9 @@
 
 <div>
   <h1 id="tool-main-heading"
-      data-en="PROCEDURAL STEPS FOR DEVELOPING FUTURE TEMPLATES"
-      data-uk="ПРОЦЕДУРНІ КРОКИ ДЛЯ РОЗРОБКИ МАЙБУТНІХ ШАБЛОНІВ">
-    PROCEDURAL STEPS FOR DEVELOPING FUTURE TEMPLATES
+      data-en="Procedural Steps for Developing Future Templates"
+      data-uk="Процедурні кроки для розробки майбутніх шаблонів">
+    Procedural Steps for Developing Future Templates
   </h1>
 
   <!-- Introduction -->
@@ -767,7 +767,7 @@
         const showAttr = lang === 'uk' ? 'data-uk-show' : 'data-en-show';
         const hideAttr = lang === 'uk' ? 'data-uk-hide' : 'data-en-hide';
         const showTxt  = label?.getAttribute(showAttr) || (lang === 'uk' ? 'Показати деталі' : 'Show Details');
-        const hideTxt  = label?.getAttribute(hideAttr) || (lang === 'uk' ? 'Сховати деталі' : 'Hide Details');
+        const hideTxt  = label?.getAttribute(hideAttr) || (lang === 'uk' ? 'Сховати деталі' : 'Hide Details'); // FIX: Removed extra 'S'
         if (label && checkbox) label.textContent = checkbox.checked ? hideTxt : showTxt;
       };
 
@@ -956,3 +956,4 @@
   updateOutputSpans();
 })();
 </script>
+

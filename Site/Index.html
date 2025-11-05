@@ -164,7 +164,7 @@
         <div class="hero-overlay"></div>
         <video playsinline autoplay muted loop id="hero-video">
             <source src="assets/BM_Ukraine.mp4" type="video/mp4">
-            Your browser does not support the video tag.
+            Your browser does not.
         </video>
         <div class="hero-content">
             <h1 data-en="Hope and Healing Through Innovation" data-uk="Надія та зцілення через інновації">Hope and Healing Through Innovation</h1>
@@ -224,39 +224,16 @@
 
   <script src="header.js"></script>
   <script>
+    // This script now *only* contains logic specific to THIS page.
     document.addEventListener('DOMContentLoaded', () => {
-      const contrastBtn = document.getElementById('contrast-toggle');
-      const isDark = () => document.body.classList.contains('dark');
-      const setTheme = mode => {
-        if(mode==='dark'){ document.body.classList.add('dark'); } else { document.body.classList.remove('dark'); }
-        localStorage.setItem('theme', mode);
-        contrastBtn.textContent = isDark() ? 'Light' : 'Dark';
-        contrastBtn.setAttribute('aria-pressed', String(isDark()));
-      };
-      (function initTheme(){
-        const stored = localStorage.getItem('theme');
-        if (stored) setTheme(stored);
-        else if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) setTheme('dark');
-        else setTheme('light');
-      })();
-      contrastBtn.addEventListener('click', () => setTheme(isDark() ? 'light' : 'dark'));
 
-      const langBtn = document.getElementById('lang-toggle');
-      const setLang = next => {
-        document.documentElement.lang = next;
-        document.querySelectorAll('[data-en]').forEach(el => {
-          const target_text = next === 'uk' ? el.getAttribute('data-uk') : el.getAttribute('data-en');
-          if (target_text != null) { el.innerHTML = target_text; }
-        });
-        langBtn.textContent = next === 'uk' ? 'UKR / EN' : 'EN / УКР';
-        localStorage.setItem('lang', next);
-      };
-      setLang(localStorage.getItem('lang') || 'en');
-      langBtn.addEventListener('click', () => {
-        const cur = localStorage.getItem('lang') || 'en';
-        setLang(cur.startsWith('en') ? 'uk' : 'en');
-      });
+      // --- Theme Toggle logic was removed ---
+      // It is now handled by header.js
 
+      // --- Language Toggle logic was removed ---
+      // It is now handled by header.js
+      
+      // --- Video Gallery Logic ---
       const galleryContainer = document.getElementById('video-gallery-container');
       if (galleryContainer) {
           const mainPlayer = document.getElementById('main-video-player');
@@ -302,6 +279,7 @@
           loadVideo(0, false); // Load first video without autoplay
       }
       
+      // --- Donation Widget Logic ---
       document.querySelectorAll('.donation-amount').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelector('.donation-amount.selected').classList.remove('selected');
@@ -309,19 +287,8 @@
         });
       });
 
-      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const closeMenuBtn = document.getElementById('close-menu-btn');
-      if (mobileMenuBtn && mobileMenu && closeMenuBtn) {
-          mobileMenuBtn.addEventListener('click', () => {
-              mobileMenu.classList.add('open');
-              mobileMenuBtn.setAttribute('aria-expanded', 'true');
-          });
-          closeMenuBtn.addEventListener('click', () => {
-              mobileMenu.classList.remove('open');
-              mobileMenuBtn.setAttribute('aria-expanded', 'false');
-          });
-      }
+      // --- Mobile Menu logic was removed ---
+      // It is now handled by header.js
     });
   </script>
   <script src="footer.js"></script>

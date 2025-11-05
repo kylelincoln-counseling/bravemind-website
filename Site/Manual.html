@@ -30,6 +30,9 @@
     nav a.active { color: var(--accent); }
     .controls{display:flex;align-items:center; gap:.5rem}
     .btn{border:1px solid var(--border); background:var(--card); color:var(--fg); padding:.55rem .8rem; border-radius:.625rem; cursor:pointer; font-weight:600}
+    .btn:hover { background: var(--border); }
+    .btn.accent { background: var(--accent); color: var(--accent-contrast); border-color: var(--accent); }
+    .btn.accent:hover { background: color-mix(in srgb, var(--accent) 90%, #000); }
 
     #mobile-menu-btn { display: none; padding: .5rem; }
     @media (max-width: 800px) { 
@@ -55,7 +58,7 @@
 
     .manual-layout {
         display: grid;
-        grid-template-columns: 260px 1fr;
+        grid-template-columns: 260px 1fr; 
         gap: 2.5rem;
         align-items: start;
     }
@@ -65,33 +68,67 @@
         top: var(--pad);
         height: calc(100vh - 2 * var(--pad));
         overflow-y: auto;
+        display: block;
+        width: 100%;
+    }
+    
+    #manual-nav {
+        display: block;
+        width: 100%;
     }
     
     #manual-sidebar ul {
         list-style: none;
         padding: 0;
         margin: 0;
-    }
-
-    #manual-sidebar > ul > li > a {
-        font-weight: 600;
-        color: var(--fg);
         display: block;
-        padding: .5rem 0;
-        cursor: pointer;
+        width: 100%;
     }
-    #manual-sidebar > ul > li > a.active {
+
+    #manual-sidebar li {
+        display: block;
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .sidebar-category-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--fg);
+        margin-top: 1.25rem; /* Reduced space */
+        margin-bottom: 0.1rem; /* Reduced space */
+    }
+    .sidebar-category-title a {
+        color: inherit;
+        padding: .25rem 0;
+        display: block;
+    }
+    .sidebar-category-title a:hover {
         color: var(--accent);
+        text-decoration: none;
+    }
+    .sidebar-category-title a.active-category {
+        color: var(--accent);
+        font-weight: 700;
     }
 
-    #manual-sidebar .submenu {
-        padding-left: 1rem;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-in-out;
+    #manual-nav > h3:first-of-type {
+      margin-top: 0.5rem;
     }
-    #manual-sidebar li.open > .submenu { max-height: 500px; }
 
+    #manual-sidebar .sidebar-category-list > li > a {
+        font-weight: 500;
+        color: var(--muted);
+        display: block;
+        padding: .2rem 0 .2rem 1rem; /* Reduced space */
+        cursor: pointer;
+        font-size: 0.95rem;
+    }
+    #manual-sidebar .sidebar-category-list > li > a.active {
+        color: var(--accent);
+        font-weight: 600;
+    }
+    
     #manual-sidebar .sidebar-title {
         font-size: 1.5rem;
         font-weight: 700;
@@ -103,32 +140,32 @@
         color: var(--fg);
         text-decoration: none;
     }
-
-    #manual-sidebar .submenu a {
-        display: block;
-        padding: .3rem 0;
-        font-size: 0.9rem;
-        color: var(--muted);
+    
+    .print-all-btn { 
+      margin-top: 1.5rem; 
+      width: 100%; 
     }
-    #manual-sidebar .submenu a.active-sub {
-        color: var(--accent);
-        font-weight: 500;
+
+    #manual-mobile-nav { display: none; margin-bottom: 1.5rem; } 
+    #manual-mobile-nav label { display: block; font-weight: 600; margin-bottom: .5rem; color: var(--fg); }
+    
+    .manual-nav-controls {
+        display: flex;
+        gap: 1rem;
+        align-items: stretch;
     }
     
-    .print-all-btn { margin-top: 1.5rem; width: 100%; }
-
-    /* --- Mobile Nav Styles --- */
-    #manual-mobile-nav { display: none; margin-bottom: 1.5rem; }
-    #manual-mobile-nav label { display: block; font-weight: 600; margin-bottom: .5rem; color: var(--fg); }
     #manual-select {
-      width: 100%; padding: .75rem; font-size: 1rem; background: var(--card); color: var(--fg);
+      width: 100%; padding: .75rem; font-size: 1rem; background: var(--card); color:var(--fg);
       border: 1px solid var(--border); border-radius: .625rem; -webkit-appearance: none; appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right .75rem center; background-size: 16px 16px;
+      flex-grow: 1;
     }
     body.dark #manual-select {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23e5e7eb' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
     }
+    
     @media (max-width: 900px) {
       .manual-layout { grid-template-columns: 1fr; }
       #manual-sidebar { display: none; }
@@ -141,6 +178,212 @@
     h2{font-size:clamp(1.4rem,2vw,1.75rem); scroll-margin-top: 2rem; margin-top: 2rem; border-bottom: 1px solid var(--border); padding-bottom: .5rem;}
     h3{font-size:1.125rem; margin-top: 1.5rem;}
     
+    #page-toc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: .625rem;
+      padding: 1rem 1.25rem;
+      margin-top: 1.5rem; /* This controls space above TOC */
+      margin-bottom: 1.5rem; /* This controls space below TOC */
+    }
+    #page-toc-title {
+      font-weight: 600;
+      color: var(--fg);
+      margin: 0 0 .5rem 0;
+      font-size: 1rem;
+    }
+    #page-toc ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 0.9rem;
+    }
+    #page-toc li {
+      margin-bottom: .25rem;
+    }
+    #page-toc a {
+      color: var(--muted);
+      display: block;
+      padding: .2rem 0;
+    }
+    #page-toc a.active-sub {
+      color: var(--accent);
+      font-weight: 500;
+    }
+    #page-toc a:hover {
+      color: var(--fg);
+      text-decoration: none;
+    }
+    
+    #manual-content img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: .625rem;
+    }
+    #manual-content figure img {
+      cursor: zoom-in;
+    }
+    
+    #manual-content figure {
+      margin: 2rem 0;
+    }
+    
+    #manual-content figcaption {
+      margin-top: .75rem;
+      text-align: center;
+      font-size: .9rem;
+      color: var(--muted);
+    }
+
+    .manual-image-grid-2x2,
+    .manual-image-grid-3x2,
+    .manual-image-grid-3x3,
+    .manual-image-grid-4x2,
+    .manual-image-grid-5x5 {
+      display: grid;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      align-items: start;
+    }
+
+    .manual-image-grid-2x2 { grid-template-columns: repeat(2, 1fr); }
+    .manual-image-grid-3x2 { grid-template-columns: repeat(3, 1fr); }
+    .manual-image-grid-3x3 { grid-template-columns: repeat(3, 1fr); }
+    .manual-image-grid-4x2 { grid-template-columns: repeat(4, 1fr); }
+    .manual-image-grid-5x5 { grid-template-columns: repeat(5, 1fr); }
+
+    .manual-image-grid-2x2 img,
+    .manual-image-grid-3x2 img,
+    .manual-image-grid-3x3 img,
+    .manual-image-grid-4x2 img,
+    .manual-image-grid-5x5 img {
+      width: 100%;
+      height: auto;
+      border-radius: .5rem;
+      border: 1px solid var(--border);
+    }
+
+    .manual-image-grid-2x2 figcaption,
+    .manual-image-grid-3x2 figcaption,
+    .manual-image-grid-3x3 figcaption,
+    .manual-image-grid-4x2 figcaption,
+    .manual-image-grid-5x5 figcaption {
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    @media (max-width: 768px) {
+      .manual-image-grid-3x2,
+      .manual-image-grid-3x3,
+      .manual-image-grid-4x2,
+      .manual-image-grid-5x5 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .manual-image-grid-2x2,
+      .manual-image-grid-3x2,
+      .manual-image-grid-3x3,
+      .manual-image-grid-4x2,
+      .manual-image-grid-5x5 {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.85);
+      cursor: zoom-out;
+      padding: 2rem;
+    }
+    .lightbox-content {
+      margin: auto;
+      display: block;
+      max-width: 90%;
+      max-height: 85vh;
+      border-radius: .5rem;
+    }
+    #lightbox-caption {
+      margin: 1rem auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+      text-align: center;
+      color: #ccc;
+      font-size: 1.1rem;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .lightbox-close:hover,
+    .lightbox-close:focus {
+      color: #bbb;
+      text-decoration: none;
+    }
+    
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+    }
+    .modal-content {
+        background: var(--bg);
+        padding: 2rem;
+        border-radius: .75rem;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .modal-content h2 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+    .modal-content p {
+        margin: 0.5rem 0 1.5rem 0;
+        color: var(--muted);
+    }
+    .modal-content input {
+        width: 100%;
+        padding: .75rem;
+        font-size: 1rem;
+        border: 1px solid var(--border);
+        border-radius: .625rem;
+        background: var(--card);
+        color: var(--fg);
+        margin-bottom: 1.5rem;
+    }
+    .modal-content #password-error {
+        color: #ef4444;
+        font-size: 0.9rem;
+        margin-top: -0.5rem;
+        margin-bottom: 1rem;
+        display: none;
+    }
+    
     footer{border-top:1px solid var(--border); padding: 2.5rem 0; color:var(--muted); margin-top: 2rem;}
     .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; max-width: 1100px; margin: 0 auto; padding: 0 var(--pad); }
     .footer-contact { text-align: right; }
@@ -151,19 +394,30 @@
     footer p { margin: 0.25rem 0; }
     @media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr; text-align: center; } .footer-contact { text-align: center; margin-top: 1.5rem; } }
     
-    /* --- Print Styles (unchanged) --- */
     @media print {
       body { background: #fff !important; color: #000 !important; }
       h1, h2, h3 { color: #000 !important; }
       p, li { color: #333 !important; }
       a { color: #000 !important; text-decoration: none !important; }
-
-      body.printing > *:not(#print-container) { display: none !important; }
-      body.printing #print-container { display: block !important; }
+      
       body:not(.printing) header, 
       body:not(.printing) footer, 
       body:not(.printing) #manual-sidebar, 
-      body:not(.printing) #manual-mobile-nav { display: none !important; }
+      body:not(.printing) #manual-mobile-nav,
+      body:not(.printing) .lightbox,
+      body:not(.printing) #page-toc,
+      body:not(.printing) .modal-overlay {
+          display: none !important;
+      }
+      body:not(.printing) .manual-layout {
+          display: block !important;
+      }
+      body:not(.printing) main {
+          padding: 0 !important;
+      }
+
+      body.printing > *:not(#print-container) { display: none !important; }
+      body.printing #print-container { display: block !important; }
 
       #print-container { display: none; font-family: Georgia, serif; font-size: 11pt; line-height: 1.5; }
       #print-cover { page: cover; page-break-after: always; text-align: center; padding-top: 30%; }
@@ -173,9 +427,11 @@
       #print-cover p:first-of-type { margin-top: 2rem; }
       #print-toc-section { page: toc; page-break-after: always; }
       #print-toc-section h2 { font-size: 20pt; margin-bottom: 2rem; border-bottom: 2px solid #333; padding-bottom: 0.5rem; }
-      #print-toc { list-style: none; padding: 0; counter-reset: toc-counter; }
-      #print-toc li { margin-bottom: 0.75rem; counter-increment: toc-counter; }
-      #print-toc li::before { content: counter(toc-counter) ". "; font-weight: bold; margin-right: 0.5rem; }
+      #print-toc { list-style: none; padding: 0; margin: 0; }
+      #print-toc > li { margin-bottom: 1.5rem; }
+      #print-toc .toc-category { font-weight: bold; font-size: 13pt; margin-bottom: 0.5rem; }
+      #print-toc .toc-items { list-style: none; padding-left: 1.5rem; margin: 0; }
+      #print-toc .toc-items li { margin-bottom: 0.5rem; font-size: 11pt; }
       #print-container section { page: content; page-break-before: always; }
       #print-container section:first-of-type { counter-reset: page 1; }
       #print-container section h1 { font-size: 18pt; border-bottom: 2px solid #333; padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
@@ -186,7 +442,46 @@
       @page content { @bottom-center { content: "Page " counter(page); font-family: Georgia, serif; font-size: 10pt; } }
       h1, h2, h3 { page-break-after: avoid; }
       p, li { orphans: 3; widows: 3; }
-      ul, ol { page-break-inside: avoid; }
+      
+      img {
+          max-width: 90% !important;
+          height: auto !important;
+          margin: 1rem auto !important;
+          display: block;
+      }
+      
+      figure {
+          page-break-inside: avoid;
+          margin: 2rem 0;
+      }
+      figcaption {
+          font-size: 0.9rem !important;
+          color: #555 !important;
+      }
+
+      .manual-image-grid-2x2,
+      .manual-image-grid-3x2,
+      .manual-image-grid-3x3,
+      .manual-image-grid-4x2,
+      .manual-image-grid-5x5 {
+          display: grid !important;
+          gap: 1rem !important;
+          page-break-inside: auto; 
+      }
+      
+      .manual-image-grid-2x2 figure,
+      .manual-image-grid-3x2 figure,
+      .manual-image-grid-3x3 figure,
+      .manual-image-grid-4x2 figure,
+      .manual-image-grid-5x5 figure {
+          page-break-inside: avoid;
+      }
+      
+      .manual-image-grid-2x2 { grid-template-columns: repeat(2, 1fr) !important; }
+      .manual-image-grid-3x2 { grid-template-columns: repeat(3, 1fr) !important; }
+      .manual-image-grid-3x3 { grid-template-columns: repeat(3, 1fr) !important; }
+      .manual-image-grid-4x2 { grid-template-columns: repeat(4, 1fr) !important; }
+      .manual-image-grid-5x5 { grid-template-columns: repeat(5, 1fr) !important; }
     }
   </style>
 </head>
@@ -194,10 +489,11 @@
   <header></header>
 
   <main class="wrap manual-layout">
-    <!-- --- Mobile Dropdown --- -->
     <div id="manual-mobile-nav">
       <label for="manual-select" data-en="Manual Navigation" data-uk="Навігація посібника">Manual Navigation</label>
-      <select id="manual-select"></select>
+      <div class="manual-nav-controls">
+        <select id="manual-select"></select>
+      </div>
     </div>
     
     <aside id="manual-sidebar">
@@ -208,39 +504,117 @@
       <button id="print-all-btn" class="btn print-all-btn" data-en="Print All" data-uk="Роздрукувати все">Print All</button>
     </aside>
 
-    <article id="manual-content"></article>
+    <article id="manual-content">
+      <!-- Content will be loaded here -->
+    </article>
   </main>
 
   <footer></footer>
 
+  <div id="image-lightbox" class="lightbox">
+    <span class="lightbox-close" id="lightbox-close-btn">&times;</span>
+    <img class="lightbox-content" id="lightbox-img">
+    <div id="lightbox-caption"></div>
+  </div>
+
+  <div id="password-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+          <h2 data-en="Access Required" data-uk="Потрібен доступ">Access Required</h2>
+          <p data-en="Please enter the password to view the manual." data-uk="Будь ласка, введіть пароль для перегляду посібника.">Please enter the password to view the manual.</p>
+          <input type="password" id="password-input" placeholder="Password..." />
+          <div id="password-error" data-en="Incorrect password. Access denied." data-uk="Неправильний пароль. Доступ заборонено.">
+              Incorrect password. Access denied.
+          </div>
+          <button id="password-submit" class="btn accent" style="width: 100%;" data-en="Submit" data-uk="Надіслати">Submit</button>
+      </div>
+  </div>
+
   <script src="header.js"></script>
   <script>
-    // --- PASSWORD PROTECTION ---
     const MANUAL_PASSWORD = "bravemind2025";
-    function checkAccess() {
-      const stored = sessionStorage.getItem('manualAccess');
-      if (stored === 'granted') return true;
-      const password = prompt('Enter password to access the manual:');
-      if (password === MANUAL_PASSWORD) { sessionStorage.setItem('manualAccess', 'granted'); return true; }
-      alert('Incorrect password. Redirecting to homepage.');
-      window.location.href = 'index.html';
-      return false;
-    }
-    if (!checkAccess()) {
-      document.body.innerHTML = '<div style="padding: 2rem; text-align: center;"><p>Access denied</p></div>';
-      throw new Error('Access denied');
-    }
-    // --- END PASSWORD PROTECTION ---
 
-    document.addEventListener('DOMContentLoaded', () => {
+    function showPasswordModal(onSuccess) {
+        const modal = document.getElementById('password-modal');
+        const input = document.getElementById('password-input');
+        const submitBtn = document.getElementById('password-submit');
+        const errorMsg = document.getElementById('password-error');
+        
+        if (!modal || !input || !submitBtn || !errorMsg) {
+            console.error('Password modal elements not found!');
+            return;
+        }
+
+        modal.style.display = 'flex';
+
+        const handleSubmit = () => {
+            const password = input.value;
+            if (password === MANUAL_PASSWORD) {
+                sessionStorage.setItem('manualAccess', 'granted');
+                modal.style.display = 'none';
+                onSuccess();
+            } else {
+                errorMsg.style.display = 'block';
+                input.value = '';
+                input.focus();
+            }
+        };
+
+        submitBtn.addEventListener('click', handleSubmit);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleSubmit();
+            }
+        });
+    }
+
+    function initializeApp() {
       let currentLang = localStorage.getItem('lang') || 'en';
       let manifest = [];
+      let flatManifestItems = [];
+      let flatManifestCategories = [];
       const manualNav = document.getElementById('manual-nav');
       const manualContent = document.getElementById('manual-content');
       const printAllBtn = document.getElementById('print-all-btn');
       const manualSelect = document.getElementById('manual-select');
 
-      // Execute inline <script> tags that arrive with fetched HTML
+      const lightbox = document.getElementById('image-lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxCaption = document.getElementById('lightbox-caption');
+      const closeBtn = document.getElementById('lightbox-close-btn');
+
+      if (manualContent && lightbox && lightboxImg && lightboxCaption && closeBtn) {
+        manualContent.addEventListener('click', (e) => {
+          if (e.target.tagName === 'IMG' && e.target.closest('figure')) {
+            e.preventDefault();
+            
+            let captionText = '';
+            const figcaption = e.target.closest('figure').querySelector('figcaption');
+            if (figcaption) {
+              const enText = figcaption.dataset.en || figcaption.textContent;
+              const ukText = figcaption.dataset.uk || enText;
+              captionText = (currentLang === 'uk' ? ukText : enText);
+            } else {
+              captionText = e.target.alt || 'Full-size view';
+            }
+            
+            lightbox.style.display = 'block';
+            lightboxImg.src = e.target.src;
+            lightboxCaption.textContent = captionText;
+          }
+        });
+
+        const closeLightbox = () => {
+          lightbox.style.display = 'none';
+        };
+
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) {
+            closeLightbox();
+          }
+        });
+      }
+
       function runScripts(container) {
         if (!container) return;
         const scripts = container.querySelectorAll('script');
@@ -253,24 +627,20 @@
         });
       }
 
-      // Sidebar label translation (titles come from manifest)
       const translateSidebar = () => {
-        if (manualNav) {
-          manualNav.querySelectorAll('ul > li > a').forEach(a => {
-            const li = a.parentElement;
-            const sectionId = li?.dataset.sectionId;
-            const section = manifest.find(s => s.id === sectionId);
-            if (section) a.textContent = currentLang === 'uk' ? section.title_uk : section.title_en;
-          });
-          manualNav.querySelectorAll('.submenu a').forEach(a => {
-            a.textContent = currentLang === 'uk' ? a.dataset.uk : a.dataset.en;
-          });
-        }
-        if (manualSelect) {
-          manualSelect.querySelectorAll('option').forEach(opt => {
-            if (opt.dataset.en) opt.textContent = currentLang === 'uk' ? opt.dataset.uk : opt.dataset.en;
-          });
-        }
+          if (manualNav) {
+             manualNav.querySelectorAll('.sidebar-category-title a').forEach(title => {
+                 if (title.dataset.en) title.textContent = currentLang === 'uk' ? title.dataset.uk : title.dataset.en;
+              });
+              manualNav.querySelectorAll('.sidebar-category-list > li > a').forEach(a => {
+                  if (a.dataset.en) a.textContent = currentLang === 'uk' ? a.dataset.uk : a.dataset.en;
+              });
+          }
+          if (manualSelect) {
+              manualSelect.querySelectorAll('option').forEach(opt => {
+                  if (opt.dataset.en) opt.textContent = currentLang === 'uk' ? opt.dataset.uk : opt.dataset.en;
+              });
+          }
       };
 
       function makeHeadingId(h, idx) {
@@ -280,23 +650,33 @@
         return h.id;
       }
 
-      const updateSidebar = (activeSectionId) => {
-        if (!manualNav || !manualContent) return;
-        const allLis = manualNav.querySelectorAll('ul > li');
-        allLis.forEach(li => {
-          const link = li.querySelector('a');
-          const submenu = li.querySelector('.submenu');
-          const sectionId = li.dataset.sectionId;
+      const updatePageTOC = () => {
+          if (!manualContent) return;
+          
+          let pageToc = document.getElementById('page-toc');
+          if (pageToc) pageToc.remove();
 
-          if (sectionId === activeSectionId) {
-            li.classList.add('open');
-            link?.classList.add('active');
-            if (submenu) submenu.remove();
+          // ****************************************************
+          // * FIX 1: Look for H2s, then fall back to H3s
+          // ****************************************************
+          let headings = manualContent.querySelectorAll('h2');
+          if (headings.length === 0) {
+              headings = manualContent.querySelectorAll('h3');
+          }
+          if (headings.length === 0) return;
 
-            const newSub = document.createElement('ul');
-            newSub.className = 'submenu';
-            const headings = manualContent.querySelectorAll('h2');
-            headings.forEach((h, i) => {
+          pageToc = document.createElement('div');
+          pageToc.id = 'page-toc';
+          
+          const title = document.createElement('h3');
+          title.id = 'page-toc-title';
+          title.dataset.en = "On this page";
+          title.dataset.uk = "На цій сторінці";
+          title.textContent = currentLang === 'uk' ? title.dataset.uk : title.dataset.en;
+          pageToc.appendChild(title);
+
+          const newSub = document.createElement('ul');
+          headings.forEach((h, i) => {
               const subLi = document.createElement('li');
               const subA = document.createElement('a');
               const enText = h.dataset.en || h.textContent || 'Section';
@@ -305,31 +685,61 @@
               subA.dataset.en = enText;
               subA.dataset.uk = ukText;
               subA.textContent = currentLang === 'uk' ? ukText : enText;
-              subA.href = `#${activeSectionId}#${hId}`;
+              subA.href = `#${window.location.hash.substring(1).split('#')[0]}#${hId}`;
               subA.onclick = (e) => {
-                e.preventDefault();
-                h.scrollIntoView({ behavior: 'smooth' });
-                document.querySelector('.submenu a.active-sub')?.classList.remove('active-sub');
-                subA.classList.add('active-sub');
+                  e.preventDefault();
+                  h.scrollIntoView({ behavior: 'smooth' });
+                  history.pushState(null, '', subA.href); 
+                  document.querySelector('#page-toc a.active-sub')?.classList.remove('active-sub');
+                  subA.classList.add('active-sub');
               };
               subLi.appendChild(subA);
               newSub.appendChild(subLi);
-            });
-            if (headings.length > 0) li.appendChild(newSub);
+          });
+          pageToc.appendChild(newSub);
+          
+          // ****************************************************
+          // * FIX 2: Insert *after* the H1 title, not before it
+          // ****************************************************
+          const mainTitle = manualContent.querySelector('h1');
+          if (mainTitle) {
+              mainTitle.insertAdjacentElement('afterend', pageToc);
           } else {
-            li.classList.remove('open');
-            link?.classList.remove('active');
-            submenu?.remove();
+              manualContent.prepend(pageToc); // Fallback if no H1
           }
-        });
+      };
+      
+      const updateSidebarActiveState = (activeId, isCategory = false) => {
+          if (!manualNav) return;
+          
+          manualNav.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
+          manualNav.querySelectorAll('.active-category').forEach(el => el.classList.remove('active-category'));
+
+          if (isCategory) {
+              const activeLink = manualNav.querySelector(`a[data-id="${activeId}"]`);
+              if (activeLink) {
+                  activeLink.classList.add('active-category');
+              }
+          } else {
+              const activeLink = manualNav.querySelector(`a[data-id="${activeId}"]`);
+              if (activeLink) {
+                  activeLink.classList.add('active');
+                  const parentCategoryLink = activeLink.closest('.sidebar-category-list')?.previousElementSibling?.querySelector('a');
+                  parentCategoryLink?.classList.add('active-category');
+              }
+          }
       };
 
-      const renderContent = async (sectionId) => {
-        const section = manifest.find(s => s.id === sectionId);
+      const renderContent = async (id, isCategory = false) => {
+        const lookup = isCategory ? flatManifestCategories : flatManifestItems;
+        const section = lookup.find(s => s.id === id); 
         if (!section || !manualContent) return;
 
         try {
-          const resp = await fetch(`manual/${section.file}`);
+          // ****************************************************
+          // * FIX 3: Use lowercase 'manual/' path
+          // ****************************************************
+          const resp = await fetch(`manual/${section.file}`); 
           if (!resp.ok) throw new Error(`Could not load ${section.file}`);
           const html = await resp.text();
 
@@ -337,14 +747,28 @@
             ${currentLang === 'uk' ? section.title_uk : section.title_en}
           </h1>${html}`;
 
-          // Translate ONLY #manual-content with the safe translator (preserves .output values)
           if (window.setPageLanguage) window.setPageLanguage(currentLang, manualContent);
 
-          // Now hydrate any <script> tags inside the loaded HTML
           runScripts(manualContent);
+          
+          updatePageTOC(); 
+          
+          if (manualSelect) manualSelect.value = id;
 
-          updateSidebar(sectionId);
-          if (manualSelect) manualSelect.value = sectionId;
+          updateSidebarActiveState(id, isCategory);
+
+          const subHash = window.location.hash.split('#')[2];
+          if (subHash) {
+              const targetEl = document.getElementById(subHash);
+              if (targetEl) {
+                  targetEl.scrollIntoView({ behavior: 'smooth' });
+                  const tocLink = document.querySelector(`#page-toc a[href$="#${subHash}"]`);
+                  tocLink?.classList.add('active-sub');
+              }
+          } else {
+              manualContent.scrollTop = 0;
+          }
+
         } catch (e) {
           manualContent.innerHTML = `<p>${currentLang === 'en' ? 'Error loading content.' : 'Помилка завантаження вмісту.'}</p>`;
           console.error('Failed to load manual section:', e);
@@ -352,7 +776,10 @@
       };
 
       const printAll = async () => {
-        if (manifest.length === 0) return;
+        if (flatManifestItems.length === 0) {
+          console.error('No manifest items loaded');
+          return;
+        }
 
         let printContainer = document.getElementById('print-container');
         if (printContainer) printContainer.remove();
@@ -376,49 +803,124 @@
 
         document.body.appendChild(printContainer);
 
-        const contentPromises = manifest.map(s => fetch(`manual/${s.file}`).then(res => res.text()));
+        // Build array of all pages to print (categories + items in order)
+        const allPages = [];
+        manifest.forEach(category => {
+          // Add category page
+          allPages.push({
+            id: category.category_id,
+            file: category.category_file,
+            title_en: category.category_en,
+            title_uk: category.category_uk,
+            isCategory: true
+          });
+          // Add all items in this category
+          category.items.forEach(item => {
+            allPages.push({
+              ...item,
+              isCategory: false
+            });
+          });
+        });
+
+        console.log(`Printing ${allPages.length} pages...`);
+
+        // Fetch all pages
+        // ****************************************************
+        // * FIX 3: Use lowercase 'manual/' path
+        // ****************************************************
+        const contentPromises = allPages.map(page => fetch(`manual/${page.file}`).then(res => res.text()));
         const allHtml = await Promise.all(contentPromises);
 
+        // Build hierarchical TOC
         const tocList = document.getElementById('print-toc');
+        manifest.forEach(category => {
+          const categoryLi = document.createElement('li');
+          
+          const categoryDiv = document.createElement('div');
+          categoryDiv.className = 'toc-category';
+          categoryDiv.textContent = currentLang === 'uk' ? category.category_uk : category.category_en;
+          categoryLi.appendChild(categoryDiv);
+          
+          const itemsUl = document.createElement('ul');
+          itemsUl.className = 'toc-items';
+          category.items.forEach(item => {
+            const itemLi = document.createElement('li');
+            itemLi.textContent = currentLang === 'uk' ? item.title_uk : item.title_en;
+            itemsUl.appendChild(itemLi);
+          });
+          categoryLi.appendChild(itemsUl);
+          
+          tocList.appendChild(categoryLi);
+        });
+
+        // Add all pages to print container
         allHtml.forEach((html, idx) => {
-          const sectionData = manifest[idx];
+          const pageData = allPages[idx]; 
           const sectionEl = document.createElement('section');
-          sectionEl.id = `print-section-${sectionData.id}`;
+          sectionEl.id = `print-section-${pageData.id}`;
           const titleEl = document.createElement('h1');
-          titleEl.textContent = currentLang === 'uk' ? sectionData.title_uk : sectionData.title_en;
+          titleEl.textContent = currentLang === 'uk' ? pageData.title_uk : pageData.title_en;
           sectionEl.appendChild(titleEl);
           sectionEl.innerHTML += html;
           printContainer.appendChild(sectionEl);
-
-          const li = document.createElement('li');
-          li.textContent = currentLang === 'uk' ? sectionData.title_uk : sectionData.title_en;
-          tocList.appendChild(li);
         });
 
-        // Translate inside print container (safe; no .output in print text)
         if (window.setPageLanguage) window.setPageLanguage(currentLang, printContainer);
 
+        const images = printContainer.querySelectorAll('img');
+        const promises = [];
+        images.forEach(img => {
+            if (img.complete) return;
+            promises.push(new Promise((resolve) => {
+                img.onload = resolve;
+                img.onerror = resolve;
+            }));
+        });
+        
+        await Promise.all(promises);
+
         document.body.classList.add('printing');
-        setTimeout(() => {
-          window.print();
-          setTimeout(() => {
-            document.body.classList.remove('printing');
-            printContainer.remove();
-          }, 500);
-        }, 250);
+        
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        console.log('Triggering print dialog...');
+        window.print();
+        
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        document.body.classList.remove('printing');
+        printContainer.remove();
+        console.log('Print complete, cleaned up');
       };
 
-      if (printAllBtn) printAllBtn.addEventListener('click', printAll);
+      if (printAllBtn) {
+        console.log('Print All button found, attaching listener');
+        printAllBtn.addEventListener('click', printAll);
+      } else {
+        console.error('Print All button not found!');
+      }
 
       const loadManual = async () => {
         try {
+          // ****************************************************
+          // * FIX 3: Use lowercase 'manual/' path
+          // ****************************************************
           const response = await fetch('manual/manifest.json');
           if (!response.ok) throw new Error('Could not load manifest');
           manifest = await response.json();
+          
+          flatManifestItems = manifest.flatMap(category => category.items); 
+          flatManifestCategories = manifest.map(category => ({
+              id: category.category_id,
+              file: category.category_file,
+              title_en: category.category_en,
+              title_uk: category.category_uk
+          }));
 
           if (!manualNav || !manualContent || !manualSelect) return;
 
-          const ul = document.createElement('ul');
+          manualNav.innerHTML = '';
+          manualSelect.innerHTML = '';
 
           const defaultOption = document.createElement('option');
           defaultOption.value = "";
@@ -427,46 +929,91 @@
           defaultOption.textContent = currentLang === 'uk' ? defaultOption.dataset.uk : defaultOption.dataset.en;
           manualSelect.appendChild(defaultOption);
 
-          manifest.forEach(section => {
-            const li = document.createElement('li');
-            li.dataset.sectionId = section.id;
-            const a = document.createElement('a');
-            a.href = `#${section.id}`;
-            a.addEventListener('click', (e) => {
-              e.preventDefault();
-              history.pushState({sectionId: section.id}, '', a.href);
-              renderContent(section.id);
+          manifest.forEach(category => {
+            const categoryTitle = document.createElement('h3');
+            categoryTitle.className = 'sidebar-category-title';
+            const categoryLink = document.createElement('a');
+            categoryLink.href = `#${category.category_id}`;
+            categoryLink.textContent = currentLang === 'uk' ? category.category_uk : category.category_en;
+            categoryLink.dataset.en = category.category_en;
+            categoryLink.dataset.uk = category.category_uk;
+            categoryLink.dataset.id = category.category_id;
+            categoryLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                history.pushState({id: category.category_id, isCategory: true}, '', categoryLink.href);
+                renderContent(category.category_id, true);
             });
-            li.appendChild(a);
-            ul.appendChild(li);
+            categoryTitle.appendChild(categoryLink);
+            manualNav.appendChild(categoryTitle);
 
-            const option = document.createElement('option');
-            option.value = section.id;
-            option.dataset.en = section.title_en;
-            option.dataset.uk = section.title_uk;
-            option.textContent = currentLang === 'uk' ? section.title_uk : section.title_en;
-            manualSelect.appendChild(option);
+            const catOption = document.createElement('option');
+            catOption.value = category.category_id;
+            catOption.dataset.en = category.category_en;
+            catOption.dataset.uk = category.category_uk;
+            catOption.textContent = currentLang === 'uk' ? category.category_uk : category.category_en;
+            catOption.dataset.isCategory = "true";
+            manualSelect.appendChild(catOption);
+
+            const itemList = document.createElement('ul');
+            itemList.className = 'sidebar-category-list';
+
+             category.items.forEach(section => {
+                const li = document.createElement('li');
+                const itemLink = document.createElement('a');
+                itemLink.href = `#${section.id}`;
+                itemLink.textContent = currentLang === 'uk' ? section.title_uk : section.title_en;
+                itemLink.dataset.en = section.title_en;
+                itemLink.dataset.uk = section.title_uk;
+                itemLink.dataset.id = section.id;
+                itemLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    history.pushState({id: section.id, isCategory: false}, '', itemLink.href);
+                    renderContent(section.id, false);
+                });
+                li.appendChild(itemLink);
+                itemList.appendChild(li);
+
+                  const option = document.createElement('option');
+                  option.value = section.id;
+                  option.dataset.en = section.title_en;
+                  option.dataset.uk = section.title_uk;
+                  option.textContent = `  ${currentLang === 'uk' ? section.title_uk : section.title_en}`;
+                  option.dataset.isCategory = "false";
+                  manualSelect.appendChild(option);
+             });
+             
+            manualNav.appendChild(itemList);
           });
-          manualNav.appendChild(ul);
 
           manualSelect.addEventListener('change', (e) => {
-            const sectionId = e.target.value;
-            if (sectionId) {
-              history.pushState({sectionId}, '', `#${sectionId}`);
-              renderContent(sectionId);
+            const id = e.target.value;
+            const isCategory = e.target.options[e.target.selectedIndex].dataset.isCategory === "true";
+            if (id) {
+              history.pushState({id, isCategory}, '', `#${id}`);
+              renderContent(id, isCategory);
             }
           });
 
-          translateSidebar();
-
-          const initialSectionId = window.location.hash.substring(1).split('#')[0] || manifest[0]?.id;
-          if (initialSectionId) {
-            await renderContent(initialSectionId);
-            history.replaceState({sectionId: initialSectionId}, '', `#${initialSectionId}`);
+          let initialId = window.location.hash.substring(1).split('#')[0];
+          let initialIsCategory = false;
+          
+          if (!initialId) {
+               initialId = flatManifestCategories[0]?.id;
+               initialIsCategory = true;
           } else {
-            manualContent.innerHTML =
-              `<p data-en="Please select a topic from the sidebar to begin."
-                  data-uk="Будь ласка, виберіть тему з бічної панелі, щоб почати."></p>`;
+               if (flatManifestCategories.find(c => c.id === initialId)) {
+                   initialIsCategory = true;
+               } else if (!flatManifestItems.find(i => i.id === initialId)) {
+                   initialId = flatManifestCategories[0]?.id;
+                   initialIsCategory = true;
+               }
+          }
+
+          if (initialId) {
+            await renderContent(initialId, initialIsCategory);
+            history.replaceState({id: initialId, isCategory: initialIsCategory}, '', `#${initialId}`);
+          } else {
+            manualContent.innerHTML = `<p data-en="Please select a topic to begin." data-uk="Будь ласка, виберіть тему, щоб почати."></p>`;
             if (window.setPageLanguage) window.setPageLanguage(currentLang, manualContent);
           }
         } catch (error) {
@@ -476,22 +1023,52 @@
         }
       };
 
-      // IMPORTANT: On language change, DO NOT re-fetch/re-render.
-      // Translate sidebar labels and ONLY the #manual-content subtree.
       document.addEventListener('languageChanged', (e) => {
         currentLang = e.detail.newLang;
         translateSidebar();
         if (window.setPageLanguage) window.setPageLanguage(currentLang, manualContent);
+        updatePageTOC();
       });
 
       window.addEventListener('popstate', (e) => {
-        const sectionId = e.state?.sectionId || window.location.hash.substring(1).split('#')[0] || manifest[0]?.id;
-        if (sectionId) renderContent(sectionId);
+        let id = e.state?.id;
+        let isCategory = e.state?.isCategory;
+
+        if (!id) {
+            const hash = window.location.hash.substring(1).split('#')[0];
+            if (flatManifestCategories.find(c => c.id === hash)) {
+                id = hash;
+                isCategory = true;
+            } else if (flatManifestItems.find(i => i.id === hash)) {
+                id = hash;
+                isCategory = false;
+            } else {
+                id = flatManifestCategories[0]?.id;
+                isCategory = true;
+            }
+        }
+        if (id) renderContent(id, isCategory);
       });
 
       loadManual();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (window.setPageLanguage) {
+            const modal = document.getElementById('password-modal');
+            if (modal) window.setPageLanguage(localStorage.getItem('lang') || 'en', modal);
+        }
+
+        const stored = sessionStorage.getItem('manualAccess');
+        if (stored === 'granted') {
+            initializeApp();
+        } else {
+            showPasswordModal(initializeApp);
+        }
     });
+
   </script>
   <script src="footer.js"></script>
 </body>
 </html>
+

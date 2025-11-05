@@ -91,6 +91,7 @@
   </style>
 </head>
 <body>
+  <!-- The header.js script will populate this -->
   <header></header>
 
   <main id="content" class="wrap">
@@ -102,7 +103,7 @@
         <div class="col-6">
             <div class="card">
                 <h3 data-en="War-Damaged Apartment & Air Raids" data-uk="Пошкоджена квартира та повітряні тривоги">War-Damaged Apartment & Air Raids</h3>
-                <p data-en="This scenario simulates the experience of being in an apartment during an air raid. Based on clinician feedback, it features dynamic and layered sound design (drones, missiles, sirens), realistic visual damage, and culturally accurate shelter locations like basements and metro stations to elicit feelings of helplessness and sensory overwhelm." data-uk="Цей сценарій імітує досвід перебування в квартирі під час повітряної тривоги. На основі відгуків клініцистів, він містить динамічний та багатошаровий звуковий дизайн (дрони, ракети, сирени), реалістичні візуальні пошкодження та культурно точні місця укриття, такі як підвали та станції метро, щоб викликати почуття безпорадності та сенсорного перевантаження.">This scenario simulates the experience of being in an apartment during an air raid. Based on clinician feedback, it features dynamic and layered sound design (drones, missiles, sirens), realistic visual damage, and culturally accurate shelter locations like basements and metro stations to elicit feelings of helplessness and sensory overwhelm.</p>
+                <p data-en="This scenario simulates the experience of being in an apartment during an air raid. Based on clinician feedback, it features dynamic and layered sound design (drones, missiles, sirens), realistic visual damage, and culturally accurate shelter locations like basements and metro stations to elicit feelings of helplessness and sensory overwhelm." data-uk="Цей сценарий імітує досвід перебування в квартирі під час повітряної тривоги. На основі відгуків клініцистів, він містить динамічний та багатошаровий звуковий дизайн (дрони, ракети, сирени), реалістичні візуальні пошкодження та культурно точні місця укриття, такі як підвали та станції метро, щоб викликати почуття безпорадності та сенсорного перевантаження.">This scenario simulates the experience of being in an apartment during an air raid. Based on clinician feedback, it features dynamic and layered sound design (drones, missiles, sirens), realistic visual damage, and culturally accurate shelter locations like basements and metro stations to elicit feelings of helplessness and sensory overwhelm.</p>
                 <div class="ratio">
                     <iframe src="https://www.youtube.com/embed/Sua6a7PlOd4" title="City Highrise Attack video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
@@ -111,7 +112,7 @@
         <div class="col-6">
             <div class="card">
                 <h3 data-en="Occupied Village / City" data-uk="Окуповане село / місто">Occupied Village / City</h3>
-                <p data-en="This scenario focuses on the unique stressors of living under occupation, such as the oppressive presence of enemy soldiers. It includes patrolling soldiers, checkpoints, propaganda visuals, and the tense silence of a captured city to address trauma related to fear, suppressed agency, and constant uncertainty." data-uk="Цей сценарій фокусується на унікальних стресових факторах життя під окупацією, таких як гнітюча присутність ворожих солдатів. Він включає патрулювання солдатів, блокпости, пропагандистські матеріали та напружену тишу захопленого міста для роботи з травмою, пов'язаною зі страхом, пригніченою свободою волі та постійною невизначеністю.">This scenario focuses on the unique stressors of living under occupation, such as the oppressive presence of enemy soldiers. It includes patrolling soldiers, checkpoints, propaganda visuals, and the tense silence of a captured city to address trauma related to fear, suppressed agency, and constant uncertainty.</p>
+                <p data-en="This scenario focuses on the unique stressors of living under occupation, such as the oppressive presence of enemy soldiers. It includes patrolling soldiers, checkpoints, propaganda visuals, and the tense silence of a captured city to address trauma related to fear, suppressed agency, and constant uncertainty." data-data-uk="Цей сценарій фокусується на унікальних стресових факторах життя під окупацією, таких як гнітюча присутність ворожих солдатів. Він включає патрулювання солдатів, блокпости, пропагандистські матеріали та напруженu тишу захопленого міста для роботи з травмою, пов'язаною зі страхом, пригніченою свободою волі та постійною невизначеністю.">This scenario focuses on the unique stressors of living under occupation, such as the oppressive presence of enemy soldiers. It includes patrolling soldiers, checkpoints, propaganda visuals, and the tense silence of a captured city to address trauma related to fear, suppressed agency, and constant uncertainty.</p>
                 <div class="ratio">
                     <iframe src="https://www.youtube.com/embed/jL2mFoJzkoo" title="Occupied City" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
@@ -132,43 +133,24 @@
     </div>
   </main>
 
+  <!-- The footer.js script will populate this -->
   <footer></footer>
 
+  <!--
+    The header.js file is responsible for populating the <header> and
+    adding all event listeners for:
+    1. Theme Toggling (contrast-toggle)
+    2. Language Switching (lang-toggle)
+    3. Mobile Menu (mobile-menu-btn, close-menu-btn)
+    
+    We removed the redundant logic from this file to prevent conflicts.
+  -->
   <script src="header.js"></script>
   <script>
+    // This script now *only* contains logic specific to THIS page.
     document.addEventListener('DOMContentLoaded', () => {
-      const contrastBtn = document.getElementById('contrast-toggle');
-      const isDark = () => document.body.classList.contains('dark');
-      const setTheme = mode => {
-        if(mode==='dark'){ document.body.classList.add('dark'); } else { document.body.classList.remove('dark'); }
-        localStorage.setItem('theme', mode);
-        contrastBtn.textContent = isDark() ? 'Light' : 'Dark';
-        contrastBtn.setAttribute('aria-pressed', String(isDark()));
-      };
-      (function initTheme(){
-        const stored = localStorage.getItem('theme');
-        if (stored) setTheme(stored);
-        else if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) setTheme('dark');
-        else setTheme('light');
-      })();
-      contrastBtn.addEventListener('click', () => setTheme(isDark() ? 'light' : 'dark'));
 
-      const langBtn = document.getElementById('lang-toggle');
-      const setLang = next => {
-        document.documentElement.lang = next;
-        document.querySelectorAll('[data-en]').forEach(el => {
-          const target_text = next === 'uk' ? el.getAttribute('data-uk') : el.getAttribute('data-en');
-          if (target_text != null) { el.innerHTML = target_text; }
-        });
-        langBtn.textContent = next === 'uk' ? 'UKR / EN' : 'EN / УКР';
-        localStorage.setItem('lang', next);
-      };
-      setLang(localStorage.getItem('lang') || 'en');
-      langBtn.addEventListener('click', () => {
-        const cur = localStorage.getItem('lang') || 'en';
-        setLang(cur.startsWith('en') ? 'uk' : 'en');
-      });
-
+      // --- Video Gallery Logic ---
       const galleryContainer = document.getElementById('video-gallery-container');
       if (galleryContainer) {
           const mainPlayer = document.getElementById('main-video-player');
@@ -214,19 +196,14 @@
           loadVideo(0, false); // Load first video without autoplay
       }
 
-      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const closeMenuBtn = document.getElementById('close-menu-btn');
-      if (mobileMenuBtn && mobileMenu && closeMenuBtn) {
-          mobileMenuBtn.addEventListener('click', () => {
-              mobileMenu.classList.add('open');
-              mobileMenuBtn.setAttribute('aria-expanded', 'true');
-          });
-          closeMenuBtn.addEventListener('click', () => {
-              mobileMenu.classList.remove('open');
-              mobileMenuBtn.setAttribute('aria-expanded', 'false');
-          });
-      }
+      // --- Mobile Menu logic was removed ---
+      // It is now handled by header.js
+
+      // --- Language Toggle logic was removed ---
+      // It is now handled by header.js
+
+      // --- Theme Toggle logic was removed ---
+      // It is now handled by header.js
     });
   </script>
   <script src="footer.js"></script>

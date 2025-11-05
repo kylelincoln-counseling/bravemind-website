@@ -11,11 +11,11 @@ const headerHTML = `
       </div>
     </a>
     <nav>
-        <a href="index.html" data-nav-link="index.html">Home</a>
-        <a href="about.html" data-nav-link="about.html">About</a>
-        <a href="how-it-works.html" data-nav-link="how-it-works.html">How It Works</a>
-        <a href="adaptations.html" data-nav-link="adaptations.html">Adaptations</a>
-        <a href="news.html" data-nav-link="news.html">News</a>
+        <a href="index.html" data-nav-link="index.html" data-en="Home" data-uk="Головна">Home</a>
+        <a href="about.html" data-nav-link="about.html" data-en="About" data-uk="Про проєкт">About</a>
+        <a href="how-it-works.html" data-nav-link="how-it-works.html" data-en="How It Works" data-uk="Як це працює">How It Works</a>
+        <a href="adaptations.html" data-nav-link="adaptations.html" data-en="Adaptations" data-uk="Адаптації">Adaptations</a>
+        <a href="news.html" data-nav-link="news.html" data-en="News" data-uk="Новини">News</a>
     </nav>
     <div class="controls">
       <button class="btn" type="button" id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
@@ -41,11 +41,11 @@ const headerHTML = `
 const mobileMenuHTML = `
   <div id="mobile-menu" class="mobile-nav">
       <button class="btn" id="close-menu-btn" aria-label="Close menu">&times;</button>
-      <a href="index.html" data-nav-link="index.html">Home</a>
-      <a href="about.html" data-nav-link="about.html">About</a>
-      <a href="how-it-works.html" data-nav-link="how-it-works.html">How It Works</a>
-      <a href="adaptations.html" data-nav-link="adaptations.html">Adaptations</a>
-      <a href="news.html" data-nav-link="news.html">News</a>
+      <a href="index.html" data-nav-link="index.html" data-en="Home" data-uk="Головна">Home</a>
+      <a href="about.html" data-nav-link="about.html" data-en="About" data-uk="Про проєкт">About</a>
+      <a href="how-it-works.html" data-nav-link="how-it-works.html" data-en="How It Works" data-uk="Як це працює">How It Works</a>
+      <a href="adaptations.html" data-nav-link="adaptations.html" data-en="Adaptations" data-uk="Адаптації">Adaptations</a>
+      <a href="news.html" data-nav-link="news.html" data-en="News" data-uk="Новини">News</a>
   </div>
 `;
 
@@ -59,16 +59,18 @@ if (header) {
 }
 
 // --- 3. ADD SHARED LOGIC ---
-document.addEventListener('DOMContentLoaded', () => {
-  // Active nav
-  try {
-    let currentPage = window.location.pathname.split('/').pop();
+// We REMOVED the 'DOMContentLoaded' listener that wrapped all this logic.
+// The script is loaded at the end of <body>, so the DOM is already ready.
+
+// Active nav
+try {
+  let currentPage = window.location.pathname.split('/').pop();
     if (!currentPage) currentPage = 'index.html';
     document.querySelectorAll(`[data-nav-link="${currentPage}"]`).forEach(link => link.classList.add('active'));
-  } catch (e) { console.error("Error setting active nav link:", e); }
+} catch (e) { console.error("Error setting active nav link:", e); }
 
-  // Contrast toggle
-  const contrastBtn = document.getElementById('contrast-toggle');
+// Contrast toggle
+const contrastBtn = document.getElementById('contrast-toggle');
   if (contrastBtn) {
     const isDark = () => document.body.classList.contains('dark');
     const setTheme = mode => {
@@ -80,9 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const storedTheme = localStorage.getItem('theme') || (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     setTheme(storedTheme);
     contrastBtn.addEventListener('click', () => setTheme(isDark() ? 'light' : 'dark'));
-  }
+}
 
-  // --- Language toggle + safe translator ---
+// --- Language toggle + safe translator ---
   const langBtn = document.getElementById('lang-toggle');
 
   // Preserve .output values while translating a node
@@ -187,4 +189,5 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileMenuBtn.setAttribute('aria-expanded', 'false');
     });
   }
-});
+// REMOVED the closing bracket for 'DOMContentLoaded'
+

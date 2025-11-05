@@ -1,51 +1,107 @@
 [
   {
-    "id": "definitions",
-    "file": "definitions.html",
-    "title_en": "Definitions",
-    "title_uk": "Визначення"
+    "category_id": "getting-started",
+    "category_en": "Getting Started",
+    "category_uk": "Початок роботи",
+    "category_file": "category-getting-started.html",
+    "items": [
+      {
+        "id": "definitions",
+        "file": "definitions.html",
+        "title_en": "Definitions",
+        "title_uk": "Визначення"
+      },
+      {
+        "id": "pc-setup",
+        "file": "pc-setup.html",
+        "title_en": "First Time PC Setup",
+        "title_uk": "Перше налаштування ПК"
+      },
+      {
+        "id": "quest-setup",
+        "file": "meta-quest-setup.html",
+        "title_en": "First Time Meta Quest 2 Setup",
+        "title_uk": "Перше налаштування Meta Quest 2"
+      },
+      {
+        "id": "office-setup",
+        "file": "Office-setup.html",
+        "title_en": "Office Setup Overview",
+        "title_uk": "Огляд налаштування офісу"
+      }
+    ]
   },
   {
-    "id": "pc-setup",
-    "file": "pc-setup.html",
-    "title_en": "First Time PC Setup",
-    "title_uk": "Перше налаштування ПК"
+    "category_id": "clinical-protocols",
+    "category_en": "Clinical Protocols",
+    "category_uk": "Клінічні протоколи",
+    "category_file": "category-clinical-protocols.html",
+    "items": [
+      {
+        "id": "session-workflow",
+        "file": "session-workflow.html",
+        "title_en": "Session Workflow (Coming Soon)",
+        "title_uk": "Робочий процес сесії (Незабаром)"
+      },
+      {
+        "id": "emdr-scripts",
+        "file": "emdr-clinical-scripts.html",
+        "title_en": "EMDR Future Template Protocol",
+        "title_uk": "Протокол майбутнього шаблону EMDR"
+      },
+      {
+        "id": "vret-protocol",
+        "file": "vret-protocol.html",
+        "title_en": "VRET Protocol (Coming Soon)",
+        "title_uk": "Протокол VRET (Незабаром)"
+      }
+    ]
   },
   {
-    "id": "quest-setup",
-    "file": "meta-quest-setup.html",
-    "title_en": "First Time Meta Quest 2 Setup",
-    "title_uk": "Перше налаштування Meta Quest 2"
+    "category_id": "virtual-worlds",
+    "category_en": "Virtual Worlds",
+    "category_uk": "Віртуальні світи",
+    "category_file": "category-virtual-worlds.html",
+    "items": [
+      {
+        "id": "combat-position",
+        "file": "Combat-position.html",
+        "title_en": "Combat Position Scenario",
+        "title_uk": "Сценарій «Бойова позиція»"
+      },
+      {
+        "id": "air-raids",
+        "file": "air-raids.html",
+        "title_en": "Air Raids (Coming Soon)",
+        "title_uk": "Повітряні тривоги (Незабаром)"
+      },
+      {
+        "id": "refugee",
+        "file": "refugee.html",
+        "title_en": "Refugee (Coming Soon)",
+        "title_uk": "Біженці (Незабаром)"
+      },
+      {
+        "id": "occupied-village",
+        "file": "occupied-village.html",
+        "title_en": "Occupied Village (Coming Soon)",
+        "title_uk": "Окуповане село (Незабаром)"
+      }
+    ]
   },
   {
-    "id": "session-workflow",
-    "file": "session-workflow.html",
-    "title_en": "Session Workflow",
-    "title_uk": "Робочий процес сесії"
-  },
-  {
-    "id": "emdr-scripts",
-    "file": "emdr-clinical-scripts.html",
-    "title_en": "EMDR Clinical Scripts",
-    "title_uk": "Клінічні скрипти EMDR"
-  },
-  {
-    "id": "vret-protocol",
-    "file": "vret-protocol.html",
-    "title_en": "VRET Protocol",
-    "title_uk": "Протокол VRET"
-  },
-  {
-    "id": "scenarios",
-    "file": "scenarios.html",
-    "title_en": "Scenarios",
-    "title_uk": "Сценарії"
-  },
-  {
-    "id": "troubleshooting",
-    "file": "troubleshooting.html",
-    "title_en": "Troubleshooting",
-    "title_uk": "Вирішення проблем"
+    "category_id": "support",
+    "category_en": "Support",
+    "category_uk": "Підтримка",
+    "category_file": "category-support.html",
+    "items": [
+      {
+        "id": "troubleshooting",
+        "file": "troubleshooting.html",
+        "title_en": "Troubleshooting",
+        "title_uk": "Вирішення проблем"
+      }
+    ]
   }
 ]
 
